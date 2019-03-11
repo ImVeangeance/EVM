@@ -1,8 +1,9 @@
-#include "header.hpp"
+#include "header2.hpp"
+#include "header3.hpp"
 
 int main(void)
 {
-	//sc_clear(); //4OT TAKOE
+	char act;
 	int value;
 	sc_memoryInit();
 	sc_regInit();
@@ -25,6 +26,9 @@ int main(void)
 	sc_memoryLoad("pojiloibinarnik");
 	std::cout.unsetf(std::ios::dec);
 	std::cout.setf(std::ios::hex);
+	std::cout << std::endl << "CLS!";
+	std::cin >> act;
+	mt_clrscr();
 	sc_memoryPrint();
 	std::cout.unsetf(std::ios::hex);
 	std::cout.setf(std::ios::dec);
