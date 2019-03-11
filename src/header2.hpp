@@ -3,8 +3,8 @@
 #include <cstdio>
 #include <cmath>
 #include <string>
-#ifndef header_hpp_
-#define header_hpp_
+#ifndef header2_hpp_
+#define header2_hpp_
 
 #define ErrorMemoryOut 0b01
 #define ErrorInvalidReg 0b10
