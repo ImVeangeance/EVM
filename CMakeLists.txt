@@ -13,11 +13,11 @@ project(main.cpp)
 include_directories(include)
 set(CMAKE_CXX_STANDARD 17) 
 set(CMAKE_CXX_STANDARD_REQUIRED on)
-set(SOURCE src/header2.hpp)
-set(SOURCE src/header3.hpp)
+set(SOURCE src/sc_header.hpp)
+set(SOURCE src/mt_header.hpp)
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
 
 
-add_executable(main src/main.cpp src/header2.hpp src/header3.hpp)
+add_executable(main src/main.cpp src/sc_header.hpp src/mt_header.hpp)
 
 #target_link_libraries(main ${PTHREAD_LIBRARY} ${PCRE_LIBRARY})
