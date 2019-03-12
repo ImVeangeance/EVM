@@ -1,10 +1,11 @@
 #include <fstream>
 #include <iostream>
-#include <cstdio>
+#include <iomanip>
 #include <cmath>
 #include <string>
-#ifndef header2_hpp_
-#define header2_hpp_
+#include "mt_header.hpp"
+#ifndef sc_header_hpp_
+#define sc_header_hpp_
 
 #define ErrorMemoryOut 0b01
 #define ErrorInvalidReg 0b10
@@ -33,6 +34,8 @@ int sc_regInit(void);
 int sc_regSet(int registr, int value);
 
 int sc_regGet(int registr, int *value);
+
+int sc_regPrint(int x, int y);
 
 int sc_commandEncode (int command, int operand, int *value);
 
@@ -98,7 +101,11 @@ int sc_memoryLoad(std::string filename)
 int sc_memoryPrint(void)
 {
 	for(auto i = 0; i < 100; i++)
-		std::cout << massive[i] << " ";
+	{
+		if(i % 10 == 0)
+			std::cout << "\n";
+		std::cout << "+" << std::setw(4) << std::setfill('0') << massive[i] << " ";
+	}
 	std::cout << "\n";
 }
 
@@ -142,6 +149,20 @@ int sc_regGet(int registr, int *value)
 		}
 	}
 	return 0;
+}
+
+int sc_regPrint(int x, int y)
+{
+	int value;
+	mt_gotoXY(x, y);
+	sc_regGet(ErrorMemoryOut, &value);
+	std::cout << "ErrorMemoryOut" << " - " << value << "\n";
+	mt_gotoXY(x + 1, y);
+	sc_regGet(ErrorInvalidReg, &value);
+	std::cout << "ErrorInvalidReg" << " - " << value << "\n";
+	mt_gotoXY(x + 2, y);
+	sc_regGet(ErrorWrongCom, &value);
+	std::cout << "ErrorWrongCom" << " - " << value << "\n";
 }
 
 int sc_commandEncode(int command, int operand, int *value)
