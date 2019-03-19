@@ -13,7 +13,7 @@
 #define BadFGColor 0b111
 #define BadBGColor 0b1000
 
-enum colors {RED = 88, BLUE = 33, GREEN = 22, WHITE = 255, PINK = 213, BLACK = 232};
+enum colors {RED = 88, BLUE = 33, GREEN = 22, WHITE = 255, PINK = 207, BLACK = 232};
 
 int mt_clrscr(void);
 int mt_gotoXY (int x, int y);
@@ -43,15 +43,15 @@ int mt_getscreensize(int &rows, int &cols)
 	return 0;
 }
 
-int mt_setfgcolor(enum colors)
+int mt_setfgcolor(enum colors color)
 {
-	std::cout << "\E[38;5;" << PINK << "m";
+	std::cout << "\E[38;5;" << color << "m";
 	return 0;
 }
 
-int mt_setbgcolor(enum colors)
+int mt_setbgcolor(enum colors color)
 {
-	std::cout << "\E[48;5;" << GREEN << "m";
+	std::cout << "\E[48;5;" << color << "m";
 	return 0;
 }
 /*

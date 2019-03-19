@@ -27,7 +27,7 @@ int sc_memorySave(std::string filename);
 
 int sc_memoryLoad(std::string filename);
 
-int sc_memoryPrint(void);
+int sc_memoryPrint(int x, int y);
 
 int sc_regInit(void);
 
@@ -94,19 +94,28 @@ int sc_memoryLoad(std::string filename)
 		std::ifstream file_open(filename, std::ios::binary);
 		file_open.read((char*)massive, sizeof(massive));
     	file_open.close();
-   	 	std::cout << "\n";
     	return 0;
 }
 
-int sc_memoryPrint(void)
+int sc_memoryPrint(int x, int y)
 {
-	for(auto i = 0; i < 100; i++)
+	std::cout.unsetf(std::ios::dec);
+	std::cout.setf(std::ios::hex);
+	for(auto i = 0; i < 10; i++)
 	{
-		if(i % 10 == 0)
-			std::cout << "\n";
-		std::cout << "+" << std::setw(4) << std::setfill('0') << massive[i] << " ";
+			mt_gotoXY(x + i, y);
+		for(auto j = 0; j < 10; j++)
+		{
+			std::cout.unsetf(std::ios::dec);
+			std::cout.setf(std::ios::hex);
+			std::cout << "+" << std::setw(4) << std::setfill('0') 
+				  << massive[10 * i + j] << " ";
+			std::cout.unsetf(std::ios::hex);
+			std::cout.setf(std::ios::dec);
+		}
+		//std::cout << "\n";
 	}
-	std::cout << "\n";
+	//std::cout << "\n";
 }
 
 int sc_regInit(void)
