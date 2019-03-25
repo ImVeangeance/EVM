@@ -8,6 +8,7 @@
 void bc_framenamePrint(void);
 int bc_printA (std::string str);
 int bc_box(int x1, int y1, int x2, int y2);
+void bc_boxPrint(void);
 int bc_printbigchar(int [2], int x, int y, enum colors, enum colors);
 int bc_setbigcharpos (int *big, int x, int y, int value);
 int bc_getbigcharpos(int *big, int x, int y, int *value);
@@ -16,9 +17,15 @@ int bc_bigcharread (int fd, int *big, int need_count, int *count);
 
 void bc_framenamePrint(void)
 {
-	mt_gotoXY(2,6);
+	mt_gotoXY(2,3);
 	std::cout << " Memory ";
-	mt_gotoXY(16,88);
+	mt_gotoXY(2,70);
+	std::cout << " Accumulator ";
+	mt_gotoXY(5,70);
+	std::cout << " InstructionCounter ";
+	mt_gotoXY(8,70);
+	std::cout << " Operation ";
+	mt_gotoXY(11,70);
 	std::cout << " Flags ";
 }
 
@@ -63,6 +70,15 @@ int bc_box(int x1, int y1, int x2, int y2)
 		else
 			bc_printA("r");
 	}
+}
+
+void bc_boxPrint(void)
+{
+	bc_box(2,3,60,11);
+	bc_box(2,70,24,2);
+	bc_box(5,70,24,2);
+	bc_box(8,70,24,2);
+	bc_box(11,70,24,2);
 }
 
 int bc_printbigchar(int [2], int x, int y, enum colors, enum colors)
