@@ -163,15 +163,15 @@ int sc_regGet(int registr, int *value)
 int sc_regPrint(int x, int y)
 {
 	int value;
-	mt_gotoXY(x, y);
+	mt_gotoXY(x, y + 2);
 	sc_regGet(ErrorMemoryOut, &value);
-	std::cout << "ErrorMemoryOut" << " - " << value << "\n";
-	mt_gotoXY(x + 1, y);
+	std::cout << value;
+	mt_gotoXY(x , y + 4);
 	sc_regGet(ErrorInvalidReg, &value);
-	std::cout << "ErrorInvalidReg" << " - " << value << "\n";
-	mt_gotoXY(x + 2, y);
+	std::cout << value;
+	mt_gotoXY(x , y + 6);
 	sc_regGet(ErrorWrongCom, &value);
-	std::cout << "ErrorWrongCom" << " - " << value << "\n";
+	std::cout << value;
 }
 
 int sc_commandEncode(int command, int operand, int *value)

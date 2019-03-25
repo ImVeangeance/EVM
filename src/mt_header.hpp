@@ -1,8 +1,3 @@
-#include <fstream>
-#include <iostream>
-#include <cstdio>
-#include <cmath>
-#include <string>
 #include <sys/ioctl.h>
 #ifndef mt_header_hpp_
 #define mt_header_hpp_
@@ -20,6 +15,7 @@ int mt_gotoXY (int x, int y);
 int mt_getscreensize(int *rows, int *cols);
 int mt_setfgcolor(enum colors);
 int mt_setbgcolor(enum colors);
+int mt_setscreensize(int rows, int cols);
 
 int mt_clrscr(void)
 {
@@ -40,6 +36,12 @@ int mt_getscreensize(int &rows, int &cols)
 		return 1;
 	rows = jopa.ws_row;
 	cols = jopa.ws_col;
+	return 0;
+}
+
+int mt_setscreensize(int rows, int cols)
+{
+	printf("\E[8;%d;%d;t", cols, rows);
 	return 0;
 }
 
