@@ -16,10 +16,10 @@ int bc_bigcharread (int fd, int *big, int need_count, int *count);
 
 void bc_framenamePrint(void)
 {
-	mt_gotoXY(2,5);
-	std::cout << "Memory";
-	mt_gotoXY(16,87);
-	std::cout << "Flag";
+	mt_gotoXY(2,6);
+	std::cout << " Memory ";
+	mt_gotoXY(16,88);
+	std::cout << " Flags ";
 }
 
 int bc_printA (std::string str)
