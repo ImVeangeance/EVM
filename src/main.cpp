@@ -1,6 +1,7 @@
 #include "sc_header.hpp"
 #include "mt_header.hpp"
- #include "bc_header.hpp"
+#include "bc_header.hpp"
+#include "rk_header.hpp"
 
 int main(void)
 {
@@ -20,15 +21,15 @@ int main(void)
 	sc_regPrint(12, 77);
 	bc_framenamePrint();
 	chooseBig(&h, '+');
-	bc_printbigchar(&h, 15, 3, BLACK, WHITE);
-	chooseBig(&h, '1');
+	bc_printbigchar(&h, 15, 3, RED, BLACK);
+	chooseBig(&h, '3');
 	bc_printbigchar(&h, 15, 11, BLACK, WHITE);
-	chooseBig(&h, '4');
+	chooseBig(&h, '0');
 	bc_printbigchar(&h, 15, 19, BLACK, WHITE);
-	chooseBig(&h, '8');
+	chooseBig(&h, '1');
 	bc_printbigchar(&h, 15, 27, BLACK, WHITE);
-	chooseBig(&h, '8');
-	bc_printbigchar(&h, 15, 35, BLACK, WHITE);
+	chooseBig(&h, '+');
+	bc_printbigchar(&h, 15, 35, RED, BLACK);
 	mt_gotoXY(27, 1);
 	std::cout << "\n";
 	return 0;

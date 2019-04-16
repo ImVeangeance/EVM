@@ -16,9 +16,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED on)
 set(SOURCE src/sc_header.hpp)
 set(SOURCE src/mt_header.hpp)
 set(SOURCE src/bc_header.hpp)
+set(SOURCE src/rk_header.hpp)
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
 
 
-add_executable(main src/main.cpp src/sc_header.hpp src/mt_header.hpp src/bc_header.hpp)
+add_executable(main src/main.cpp src/sc_header.hpp src/mt_header.hpp src/bc_header.hpp src/rk_header.hpp)
 
 #target_link_libraries(main ${PTHREAD_LIBRARY} ${PCRE_LIBRARY})
