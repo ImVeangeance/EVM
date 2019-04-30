@@ -173,8 +173,8 @@ int bc_bigcharread (int fd, int *big, int need_count, int *count)
 void chooseBig(int *BIG, int value) {
 	switch (value) {
 	case '+':
-		BIG[0] = 2115647488;
-            	BIG[1] = 1857662;
+		BIG[0] = 1008205824; //0x00000000000000000001100000111100
+            	BIG[1] = 6204; // 0x00111100000110000000000000000000
             	break;
         case '0': //+
         	BIG[0] = 1246118526; // 1111638654 2118279762
