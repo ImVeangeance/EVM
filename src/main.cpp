@@ -20,7 +20,7 @@ int main(void)
 	sc_memoryPrint(3, 3);
 	sc_regPrint(12, 77);
 	bc_framenamePrint();
-	chooseBig(&h, '0');
+	chooseBig(&h, '+');
 	bc_printbigchar(&h, 15, 3, BLACK, WHITE);
 	chooseBig(&h, 'A');
 	bc_printbigchar(&h, 15, 11, BLACK, WHITE);
