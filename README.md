@@ -1,4 +1,11 @@
 # EVM
-EVM combinaton (SImpleComputer)
+EVM combination (sc_*)
+EVM combination (mt_*)
 
-https://www.instagram.com/rogueinrush/
+# How to compile
+$mkdir build
+$cd build
+$make ..
+$make && ./main
+
+#yapojiloizabiyaka
