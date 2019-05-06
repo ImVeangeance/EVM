@@ -20,7 +20,7 @@ enum keys {
 	key_f6,
 	key_load,
 	key_save,
-	key_r,
+	key_reset,
 	key_tt,
 	key_i,
 	key_other,
@@ -57,7 +57,7 @@ int rk_readkey(enum keys *key)
 	} else if (buf[0] == 's') {
 		*key = key_save;
 	} else if (buf[0] == 'r') {
-		*key = key_r;
+		*key = key_reset;
 	} else if (buf[0] == 't') {
 		*key = key_tt;
 	} else if (buf[0] == 'i') {

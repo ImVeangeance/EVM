@@ -185,8 +185,8 @@ void chooseBig(int *BIG, int value) {
             	BIG[1] = 404232216;
             	break;
         case '2': //-
-            	BIG[0] = 270549118;
-            	BIG[1] = 1044654088;
+            	BIG[0] = 538983424;
+            	BIG[1] = 3935292;
             break;
         case '3': //-
             	BIG[0] = 270549564;

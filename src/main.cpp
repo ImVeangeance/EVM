@@ -8,32 +8,28 @@
 
 void printBig(void)
 {
-    int value, adress, h = 1;
+    int value = 0, adress = 0, h = 1;
 	sc_memoryGet(adress, &value);
 	std::stringstream sstream;
     sstream << std::setw(4) << std::setfill('0') << std::hex << value  << std::dec;
 	std::string str = sstream.str();
 	chooseBig(&h, '+');
-	bc_printbigchar(&h, 2, 14, WHITE, GREEN);
+	bc_printbigchar(&h, 15, 3, WHITE, BLUE);
 	chooseBig(&h, str[0]);
-	bc_printbigchar(&h, 11, 14, WHITE, GREEN);
+	bc_printbigchar(&h, 15, 11, WHITE, BLUE);
 	chooseBig(&h, str[1]);
-	bc_printbigchar(&h, 20, 14, WHITE, GREEN);
+	bc_printbigchar(&h, 15, 19, WHITE, BLUE);
 	chooseBig(&h, str[2]);
-	bc_printbigchar(&h, 29, 14, WHITE, GREEN);
+	bc_printbigchar(&h, 15, 27, WHITE, BLUE);
 	chooseBig(&h, str[3]);
-	bc_printbigchar(&h, 38, 14, WHITE, GREEN);
-	mt_gotoXY(1, 23);
+	bc_printbigchar(&h, 15, 35, WHITE, BLUE);
+	mt_gotoXY(25, 1);
 }
 
-
-int main(void)
+void ap(void)
 {
-    keys key;
-	int rows = 50, cols = 60;
-	mt_setscreensize(110, 30);
-	setbuf(stdout, NULL);
-	sc_memoryInit();
+    setbuf(stdout, NULL);
+    sc_memoryInit();
 	sc_regInit();
 	mt_clrscr();
 	bc_boxPrint();
@@ -42,6 +38,16 @@ int main(void)
 	bc_framenamePrint();
 	//pa_printAccumulator();
 	//pa_printInstructionCounter();
+	mt_gotoXY(25, 1);
+}
+
+
+int main(void)
+{
+    keys key;
+	int rows = 50, cols = 60, h;
+	mt_setscreensize(110, 30);
+    ap();
 	while (key != key_q)
 	{
 		rk_readkey(&key);
@@ -60,7 +66,7 @@ int main(void)
 				sc_regPrint(12, 77);
 			}
 				break;
-			case key_r:
+			case key_reset:
 			{
 			    //
 			}
@@ -87,22 +93,22 @@ int main(void)
 				break;
 			case key_up:
 			{
-			    //
+			    printBig();
 			}
 				break;
 			case key_down:
 			{
-			    //
+			    printBig();
 			}
 				break;
 			case key_right:
 			{
-			    //
+			    printBig();
 			}
 				break;
 			case key_left:
 			{
-			    //
+			    printBig();
 			}
 				break;
 			default:
