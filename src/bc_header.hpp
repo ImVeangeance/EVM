@@ -26,7 +26,7 @@ void bc_framenamePrint(void)
 	mt_gotoXY(2,70);
 	std::cout << " Accumulator ";
 	mt_gotoXY(5,70);
-	std::cout << " InstructionCounter ";
+	std::cout << " Instruction Counter ";
 	mt_gotoXY(8,70);
 	std::cout << " Operation ";
 	mt_gotoXY(11,70);
@@ -178,70 +178,70 @@ int bc_bigcharread (int fd, int *big, int need_count, int *count)
 void chooseBig(int *BIG, int value) {
 	switch (value) {
 	case '+':
-		BIG[0] = 1008205824; //0x00000000000000000001100000111100
-            	BIG[1] = 6204; // 0x00111100000110000000000000000000
+		BIG[0] = 1008205824;
+            	BIG[1] = 6204;
             	break;
         case '0': //+
-        	BIG[0] = 1246118526; // 1111638654 2118279762
-            	BIG[1] = 2118279762; // 2118271554
+        	BIG[0] = 1382171196;
+            	BIG[1] = 1010976330;
             	break;
         case '1': //+
-            	BIG[0] = 404232216; // 404430364
-            	BIG[1] = 404232216;
+            	BIG[0] = 134744072;
+            	BIG[1] = 269488144;
             	break;
-        case '2': //-
-            	BIG[0] = 538983424;
-            	BIG[1] = 3935292;
+        case '2': //+
+            	BIG[0] = 270549564;
+            	BIG[1] = 2114061320;
             break;
-        case '3': //-
+        case '3': //+
             	BIG[0] = 270549564;
             	BIG[1] = 1010966544;
             break;
-        case '4': //
-            	BIG[0] = 2120640102;
-            	BIG[1] = 1616928864;
+        case '4': //+
+            	BIG[0] = 1213227072;
+            	BIG[1] = 1077967940;
             	break;
-        case '5':
-            	BIG[0] = 2114324094;
-            	BIG[1] = 2120245344;
+        case '5': //+
+            	BIG[0] = 201474620;
+            	BIG[1] = 1010974768;
             	break;
-        case '6':
-            	BIG[0] = 101058174;
-            	BIG[1] = 2118534782;
+        case '6': //+
+            	BIG[0] = 33702968;
+            	BIG[1] = 1010975330;
             	break;
-        case '7':
-           	BIG[0] = 2016423998;
-            	BIG[1] = 808464504;
+        case '7': //+
+           	BIG[0] = 135275646;
+            	BIG[1] = 134749192;
             	break;
-        case '8':
-            	BIG[0] = 2118271614;
-            	BIG[1] = 2118271614;
+        case '8': //+
+            	BIG[0] = 1312965180;
+            	BIG[1] = 1010975346;
             	break;
-        case '9':
-            	BIG[0] = 1111638654;
-            	BIG[1] = 2120245374;
+        case '9': //+- !
+            	BIG[0] = 1682063932;
+            	BIG[1] = 1010974808;
             	break;
-        case 'a':
+        case 'a': //
             	BIG[0] = 2118271614;
             	BIG[1] = 1111638594;
             	break;
-        case 'b':
+        case 'b': //
             	BIG[0] = 2116166206;
             	BIG[1] = 2118271554;
             	break;
-        case 'c':
+        case 'c': //
             	BIG[0] = 33686142;
             	BIG[1] = 2114060802;
             	break;
-        case 'd':
+        case 'd': //
             	BIG[0] = 1145325182;
             	BIG[1] = 2118534212;
             	break;
-        case 'e':
+        case 'e': //
             	BIG[0] = 2114060926;
             	BIG[1] = 2114060926;
             	break;
-        case 'f':
+        case 'f': //
             	BIG[0] = 2114060926;
             	BIG[1] = 131586;
             	break;

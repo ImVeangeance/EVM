@@ -12,7 +12,6 @@ void printBig(void)
 {
     int h[2] = {0};
 	sc_memoryGet(adress, &value);
-	//id_marker(adress);
 	std::stringstream sstream;
     std::string str;
     sstream << std::setw(4) << std::setfill('0') << std::hex << value  << std::dec;
@@ -44,8 +43,6 @@ void ap(void)
 	bc_framenamePrint();
 	printBig();
 	id_infoPrint();
-	//pa_printAccumulator();
-	//pa_printInstructionCounter();
 	mt_gotoXY(26, 1);
 }
 
@@ -122,7 +119,8 @@ int main(void)
 				break;
 			case key_plus:
 			{
-			    value += 5;
+			    if(adress > -1 and adress < 100)
+			        value += 5;
 			    sc_memorySet(adress, value);
 			    sc_memoryPrint(adress);
 			    printBig();
@@ -132,7 +130,7 @@ int main(void)
 			case key_minus:
 			{
 
-			    if(value > 0)
+			    if(value > 0 and (adress > -1 and adress < 100))
 			        value -= 5;
 			    sc_memorySet(adress, value);
 			    sc_memoryPrint(adress);

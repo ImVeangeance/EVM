@@ -10,6 +10,8 @@
 
 int id_accumPrint(int x, int y);
 int id_infoPrint(int x, int y);
+void printBig(void);
+void ap(void);
 
 int id_accumPrint(int x, int y)
 {
@@ -22,19 +24,18 @@ int id_infoPrint(void)
 	mt_gotoXY(15,45);
 	std::cout << "arrow key's - bypass the memory";
 	mt_gotoXY(16,45);
-	std::cout << "l - load";
+	std::cout << "'l' - load";
 	mt_gotoXY(17,45);
-	std::cout << "s - save";
+	std::cout << "'s' - save";
 	mt_gotoXY(18,45);
-	std::cout << "r - reset";
+	std::cout << "'r' - reset";
 	mt_gotoXY(19,45);
 	std::cout << "'+' - +5 to memory unit";
 	mt_gotoXY(20,45);
-	std::cout << "'-' -5 to memory unit";
+	std::cout << "'-' - -5 to memory unit";
 	mt_gotoXY(21,45);
-	std::cout << "q - quite";
+	std::cout << "'q' - quite";
 	return 0;
 }
-
 
 #endif
