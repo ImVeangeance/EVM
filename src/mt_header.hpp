@@ -2,12 +2,6 @@
 #ifndef mt_header_hpp_
 #define mt_header_hpp_
 
-#define WrongCLS 0b100
-#define OutOfRangeGOTOXY 0b101
-#define BadGetScreenSize 0b110
-#define BadFGColor 0b111
-#define BadBGColor 0b1000
-
 enum colors {RED = 88, BLUE = 33, GREEN = 22, WHITE = 255, PINK = 207, BLACK = 232};
 
 int mt_clrscr(void);
@@ -29,6 +23,7 @@ int mt_gotoXY(int x, int y)
 	return 0;
 }
 
+
 int mt_getscreensize(int &rows, int &cols)
 {
 	winsize jopa;
@@ -38,6 +33,7 @@ int mt_getscreensize(int &rows, int &cols)
 	cols = jopa.ws_col;
 	return 0;
 }
+
 
 int mt_setscreensize(int rows, int cols)
 {

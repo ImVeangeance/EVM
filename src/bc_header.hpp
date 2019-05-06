@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
@@ -156,6 +155,7 @@ int bc_bigcharwrite (int fd, int *big,int count)
 	}
 	return 0;
 }
+
 
 int bc_bigcharread (int fd, int *big, int need_count, int *count)
 {

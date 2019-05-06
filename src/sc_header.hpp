@@ -198,6 +198,7 @@ int sc_commandEncode(int command, int operand, int *value)
 	return 0;
 }
 
+
 int sc_commandDecode(int value, int *command, int *operand)
 {
 	if ((value >> 14) != 0)
