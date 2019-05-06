@@ -25,6 +25,8 @@ enum keys {
 	key_i,
 	key_other,
 	key_q,
+	key_plus,
+	key_minus,
 };
 
 int rk_readkey(keys *key);
@@ -35,43 +37,35 @@ int rk_mytermregime (int regime, int vtime, int vmin, int echo, int sigint);
 int rk_readkey(enum keys *key)
 {
 	rk_mytermregime(1, 0, 1, 1, 1);
-
 	char buf[8] = { 0 };
-
 	read(STDIN_FILENO, buf, 8);
-
-	if (strcmp(buf, "\E[A") == 0) {
+	if (strcmp(buf, "\E[A") == 0)
 		*key = key_up;
-	} else if (strcmp(buf, "\E[B") == 0) {
+	else if (strcmp(buf, "\E[B") == 0)
 		*key = key_down;
-	} else if (strcmp(buf, "\E[C") == 0) {
+	else if (strcmp(buf, "\E[C") == 0)
 		*key = key_right;
-	} else if (strcmp(buf, "\E[D") == 0) {
+	else if (strcmp(buf, "\E[D") == 0)
 		*key = key_left;
-	} else if (strcmp(buf, "\E[15~") == 0) {
+	else if (strcmp(buf, "\E[15~") == 0)
 		*key = key_f5;
-	} else if (strcmp(buf, "\E[17~") == 0) {
+	else if (strcmp(buf, "\E[17~") == 0)
 		*key = key_f6;
-	} else if (buf[0] == 'l') {
+	else if (buf[0] == 'l')
 		*key = key_load;
-	} else if (buf[0] == 's') {
+	else if (buf[0] == 's')
 		*key = key_save;
-	} else if (buf[0] == 'r') {
+	else if (buf[0] == 'r')
 		*key = key_reset;
-	} else if (buf[0] == 't') {
-		*key = key_tt;
-	} else if (buf[0] == 'i') {
-		*key = key_i;
-	} /*else if (buf[0] >= '0' && buf[0] <= '9'){
-		*key = (buf[0] - 48);
-	}*/ else if (buf[0] == 'q') {
+	else if (buf[0] == '=' or buf[0] == '+')
+		*key = key_plus;
+	else if (buf[0] == '-' or buf[0] == '_')
+		*key = key_minus;
+	else if (buf[0] == 'q')
 		*key = key_q;
-	}  else {
+	else
 		*key = key_other;
-	}
-
 	rk_mytermrestore();
-
 	return 0;
 }
 

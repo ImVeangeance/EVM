@@ -8,9 +8,6 @@
 #ifndef bc_header_hpp_
 #define bc_header_hpp_
 
-int bc0[2] = {1};
-int bc1[2] = {1};
-
 void bc_framenamePrint(void);
 int bc_printA (std::string str);
 int bc_box(int x1, int y1, int x2, int y2);
@@ -23,6 +20,7 @@ int bc_bigcharread (int fd, int *big, int need_count, int *count);
 
 void bc_framenamePrint(void)
 {
+	mt_setfgcolor(BLUE);
 	mt_gotoXY(2,3);
 	std::cout << " Memory ";
 	mt_gotoXY(2,70);
@@ -33,6 +31,11 @@ void bc_framenamePrint(void)
 	std::cout << " Operation ";
 	mt_gotoXY(11,70);
 	std::cout << " Flags ";
+	mt_gotoXY(14,3);
+	std::cout << " Number in zoom ";
+	mt_gotoXY(14,45);
+	std::cout << " Keys of action ";
+	mt_setfgcolor(BLACK);
 }
 
 int bc_printA (std::string str)
@@ -84,6 +87,8 @@ void bc_boxPrint(void)
 	bc_box(5,70,24,2);
 	bc_box(8,70,24,2);
 	bc_box(11,70,24,2);
+	bc_box(14,3,40,9);
+	bc_box(14,45,39,9);
 }
 
 int bc_printbigchar(int a[2], int x, int y, enum colors color1, enum colors color2)
@@ -216,27 +221,27 @@ void chooseBig(int *BIG, int value) {
             	BIG[0] = 1111638654;
             	BIG[1] = 2120245374;
             	break;
-        case 'A':
+        case 'a':
             	BIG[0] = 2118271614;
             	BIG[1] = 1111638594;
             	break;
-        case 'B':
+        case 'b':
             	BIG[0] = 2116166206;
             	BIG[1] = 2118271554;
             	break;
-        case 'C':
+        case 'c':
             	BIG[0] = 33686142;
             	BIG[1] = 2114060802;
             	break;
-        case 'D':
+        case 'd':
             	BIG[0] = 1145325182;
             	BIG[1] = 2118534212;
             	break;
-        case 'E':
+        case 'e':
             	BIG[0] = 2114060926;
             	BIG[1] = 2114060926;
             	break;
-        case 'F':
+        case 'f':
             	BIG[0] = 2114060926;
             	BIG[1] = 131586;
             	break;
