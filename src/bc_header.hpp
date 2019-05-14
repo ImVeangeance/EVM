@@ -20,7 +20,7 @@ int bc_bigcharread (int fd, int *big, int need_count, int *count);
 
 void bc_framenamePrint(void)
 {
-	mt_setfgcolor(BLUE);
+	mt_setfgcolor(PINK);
 	mt_gotoXY(2,3);
 	std::cout << " Memory ";
 	mt_gotoXY(2,70);

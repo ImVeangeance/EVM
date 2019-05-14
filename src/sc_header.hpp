@@ -106,8 +106,8 @@ int sc_memoryPrint(int adress)
 		{
 			if((i * 10) + j == adress)
 			{
-				mt_setbgcolor(BLUE);
-				mt_setfgcolor(BLACK);
+				mt_setbgcolor(WHITE);
+				mt_setfgcolor(PINK);
 			}
 			std::cout.unsetf(std::ios::dec);
 			std::cout.setf(std::ios::hex);
