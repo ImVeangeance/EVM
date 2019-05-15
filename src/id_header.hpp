@@ -1,4 +1,7 @@
 #include <iostream>
+#include <signal.h>
+#include <sys/ioctl.h>
+#include <sys/time.h>
 #include "sc_header.hpp"
 #include "mt_header.hpp"
 #include "bc_header.hpp"
@@ -12,6 +15,11 @@ int id_accumPrint(int x, int y);
 int id_infoPrint(int x, int y);
 void printBig(void);
 void ap(void);
+void stopHandler(int);
+void handlerRun(int);
+void handlerRun(int);
+void goOnce(void);
+void runOnMemory(void);
 
 int id_accumPrint(int x, int y)
 {
@@ -35,6 +43,9 @@ int id_infoPrint(void)
 	std::cout << "'-' - -5 to memory unit";
 	mt_gotoXY(21,45);
 	std::cout << "'q' - quite";
+	mt_gotoXY(22,45);
+	std::cout << "'g' - run";
+	std::cout << "\t's - step";
 	return 0;
 }
 

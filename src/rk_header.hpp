@@ -27,6 +27,8 @@ enum keys {
 	key_q,
 	key_plus,
 	key_minus,
+	key_run,
+	key_step,
 };
 
 int rk_readkey(keys *key);
@@ -61,6 +63,10 @@ int rk_readkey(enum keys *key)
 		*key = key_plus;
 	else if (buf[0] == '-' or buf[0] == '_')
 		*key = key_minus;
+	else if (buf[0] == 'g')
+		*key = key_run;
+	else if (buf[0] == 's')
+		*key = key_step;
 	else if (buf[0] == 'q')
 		*key = key_q;
 	else

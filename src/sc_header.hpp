@@ -10,6 +10,7 @@
 #define ErrorMemoryOut 0b01
 #define ErrorInvalidReg 0b10
 #define ErrorWrongCom 0b11
+#define IGNORE_TIMER 0b100
 
 int massive[100];
 
@@ -106,8 +107,8 @@ int sc_memoryPrint(int adress)
 		{
 			if((i * 10) + j == adress)
 			{
-				mt_setbgcolor(WHITE);
-				mt_setfgcolor(PINK);
+				mt_setbgcolor(BLUE);
+				mt_setfgcolor(BLACK);
 			}
 			std::cout.unsetf(std::ios::dec);
 			std::cout.setf(std::ios::hex);
@@ -130,7 +131,7 @@ int sc_regInit(void)
 
 int sc_regSet(int registr, int value)
 {
-	if (registr == ErrorMemoryOut || registr == ErrorWrongCom || registr == ErrorInvalidReg)
+	if (registr == ErrorMemoryOut || registr == ErrorWrongCom || registr == ErrorInvalidReg || registr == IGNORE_TIMER)
 	{
 		if (value == 0)
 		{
@@ -150,7 +151,7 @@ int sc_regSet(int registr, int value)
 
 int sc_regGet(int registr, int *value)
 {
-	if (registr == ErrorMemoryOut || registr == ErrorWrongCom || registr == ErrorInvalidReg)
+	if (registr == ErrorMemoryOut || registr == ErrorWrongCom || registr == ErrorInvalidReg || registr == IGNORE_TIMER)
 	{
 		if ((flag & registr) != 0)
 		{
@@ -169,13 +170,36 @@ int sc_regPrint(int x, int y)
 	int value;
 	mt_gotoXY(x, y + 2);
 	sc_regGet(ErrorMemoryOut, &value);
-	std::cout << value;
+	if(value)
+		mt_setfgcolor(RED);
+	else
+		mt_setfgcolor(GREEN);
+	std::cout << "M";
+	mt_setfgcolor(WHITE);
 	mt_gotoXY(x , y + 4);
 	sc_regGet(ErrorInvalidReg, &value);
-	std::cout << value;
+	if(value)
+		mt_setfgcolor(RED);
+	else
+		mt_setfgcolor(GREEN);
+	std::cout << "R";
+	mt_setfgcolor(WHITE);
 	mt_gotoXY(x , y + 6);
 	sc_regGet(ErrorWrongCom, &value);
-	std::cout << value;
+	if(value)
+		mt_setfgcolor(RED);
+	else
+		mt_setfgcolor(GREEN);
+	std::cout << "W";
+	mt_setfgcolor(WHITE);
+	mt_gotoXY(x , y + 8);
+	sc_regGet(IGNORE_TIMER, &value);
+	if(value)
+		mt_setfgcolor(RED);
+	else
+		mt_setfgcolor(GREEN);
+	std::cout << "I";
+	mt_setfgcolor(WHITE);
 }
 
 int sc_commandEncode(int command, int operand, int *value)

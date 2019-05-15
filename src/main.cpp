@@ -6,7 +6,86 @@
 #include "rk_header.hpp"
 #include "id_header.hpp"
 
-int adress = -1, value = 0;
+struct itimerval newTime, oldTime;
+
+int adress = 0, value = 0;
+
+void stopHandler(int signaly)
+{
+    newTime.it_interval.tv_sec = 0;
+    newTime.it_interval.tv_usec = 0;
+    newTime.it_value.tv_sec = 0;
+    newTime.it_value.tv_usec = 0;
+    setitimer(ITIMER_REAL, &newTime, &oldTime);
+}
+
+void handlerRun(int signaly)
+{
+    int value;
+    sc_regGet(IGNORE_TIMER, &value);
+    if((value == 0) & (adress + 1 < 100))
+    {
+        adress++;
+	sc_memoryPrint(adress);
+        printBig();
+        sc_regPrint(12, 77);
+    }
+    else
+    {
+        signal(SIGALRM, handlerRun);
+        newTime.it_interval.tv_sec = 0;
+        newTime.it_interval.tv_usec = 0;
+        newTime.it_value.tv_sec = 0;
+        newTime.it_value.tv_usec = 0;
+        setitimer(ITIMER_REAL, &newTime, &oldTime);
+        sc_regSet(IGNORE_TIMER, 1);
+        sc_memoryPrint(adress);
+        printBig();
+        sc_regPrint(12, 77);
+    }
+}
+
+void handlerOnce(int signaly)
+{
+    int value;
+    sc_regGet(IGNORE_TIMER, &value);
+    if((value == 0) & (adress + 1 < 100))
+    {
+        adress++;
+        sc_memoryPrint(adress);
+        printBig();
+        sc_regPrint(12, 77);
+        signal(SIGALRM, handlerOnce);
+        newTime.it_interval.tv_sec = 0;
+        newTime.it_interval.tv_usec = 0;
+        newTime.it_value.tv_sec = 0;
+        newTime.it_value.tv_usec = 0;
+        setitimer(ITIMER_REAL, &newTime, &oldTime);
+        sc_regSet(IGNORE_TIMER, 1);
+        sc_memoryPrint(adress);
+        printBig();
+        sc_regPrint(12, 77);
+    }
+}
+
+void goOnce()
+{signal(SIGALRM, handlerOnce);
+    newTime.it_interval.tv_sec = 0;
+    newTime.it_interval.tv_usec = 0;
+    newTime.it_value.tv_sec = 1;
+    newTime.it_value.tv_usec = 0;
+    setitimer(ITIMER_REAL, &newTime, &oldTime);
+}
+
+void runOnMemory()
+{
+    signal(SIGALRM, handlerRun);
+    newTime.it_interval.tv_sec = 1;
+    newTime.it_interval.tv_usec = 0;
+    newTime.it_value.tv_sec = 1;
+    newTime.it_value.tv_usec = 0;
+    setitimer(ITIMER_REAL, &newTime, &oldTime);
+}
 
 void printBig(void)
 {
@@ -17,15 +96,15 @@ void printBig(void)
     sstream << std::setw(4) << std::setfill('0') << std::hex << value  << std::dec;
 	str = sstream.str();
 	chooseBig(h, '+');
-	bc_printbigchar(h, 15, 3, WHITE, PINK);
+	bc_printbigchar(h, 15, 3, BLACK, BLUE);
 	chooseBig(h, str[0]);
-	bc_printbigchar(h, 15, 11, WHITE, PINK);
+	bc_printbigchar(h, 15, 11, BLACK, BLUE);
 	chooseBig(h, str[1]);
-	bc_printbigchar(h, 15, 19, WHITE, PINK);
+	bc_printbigchar(h, 15, 19, BLACK, BLUE);
 	chooseBig(h, str[2]);
-	bc_printbigchar(h, 15, 27, WHITE, PINK);
+	bc_printbigchar(h, 15, 27, BLACK, BLUE);
 	chooseBig(h, str[3]);
-	bc_printbigchar(h, 15, 35, WHITE, PINK);
+	bc_printbigchar(h, 15, 35, BLACK, BLUE);
 	mt_setbgcolor(BLACK);
 	mt_setfgcolor(WHITE);
 	mt_gotoXY(25, 1);
@@ -34,12 +113,14 @@ void printBig(void)
 void ap(void)
 {
     setbuf(stdout, NULL);
+    sc_regSet(IGNORE_TIMER, 1);
     sc_memoryInit();
 	sc_regInit();
 	mt_clrscr();
 	bc_boxPrint();
 	sc_memoryPrint(adress);
 	sc_regPrint(12, 77);
+	//mt_setbgcolor(RED);
 	bc_framenamePrint();
 	printBig();
 	id_infoPrint();
@@ -76,8 +157,10 @@ int main(void)
 			case key_reset:
 			{
 			    ap();
-			    adress = -1;
+			    adress = 0;
+			    sc_regGet(IGNORE_TIMER, &value);
 			    sc_memoryPrint(adress);
+			    sc_regPrint(12, 77);
 			    mt_gotoXY(26, 1);
 			}
 				break;
@@ -86,6 +169,7 @@ int main(void)
 			    if(adress > 9)
 			        adress -= 10;
 			    sc_memoryPrint(adress);
+			    sc_regPrint(12, 77);
 			    printBig();
 			    mt_gotoXY(26, 1);
 			}
@@ -93,8 +177,9 @@ int main(void)
 			case key_down:
 			{
 			    if(adress <= 89 and adress > -1)
-			        adress += 10;
+			        adress += 10, sc_regGet(IGNORE_TIMER, &value);
 			    sc_memoryPrint(adress);
+			    sc_regPrint(12, 77);
 			    printBig();
 			    mt_gotoXY(26, 1);
 			}
@@ -102,8 +187,9 @@ int main(void)
 			case key_right:
 			{
 			    if(adress < 99)
-			        adress++;
+			        adress++, sc_regGet(IGNORE_TIMER, &value);
 			    sc_memoryPrint(adress);
+			    sc_regPrint(12, 77);
 			    printBig();
 			    mt_gotoXY(26, 1);
 			}
@@ -111,8 +197,9 @@ int main(void)
 			case key_left:
 			{
 			    if(adress > 0)
-			        adress--;
+			        adress--, sc_regGet(IGNORE_TIMER, &value);
 			    sc_memoryPrint(adress);
+			    sc_regPrint(12, 77);
 			    printBig();
 			    mt_gotoXY(26, 1);
 			}
@@ -122,6 +209,7 @@ int main(void)
 			    if(adress > -1 and adress < 100)
 			        value += 5;
 			    sc_memorySet(adress, value);
+			    sc_regPrint(12, 77);
 			    sc_memoryPrint(adress);
 			    printBig();
 			    mt_gotoXY(26, 1);
@@ -137,7 +225,48 @@ int main(void)
 			    printBig();
 			    mt_gotoXY(26, 1);
 			}
+			case key_run:
+			{
+				sc_regSet(IGNORE_TIMER, 0);
+				mt_clrscr();
+				bc_boxPrint();
+				id_infoPrint();
+				bc_framenamePrint();
+				sc_regPrint(12, 77);
+				sc_memoryPrint(adress);
+				printBig();
+				sc_regPrint(12, 77);
+				runOnMemory();
+				sc_regPrint(12, 77);
+			    mt_gotoXY(26, 1);
+			}
 				break;
+			case key_step:
+
+				sc_regSet(IGNORE_TIMER, 0);
+				mt_clrscr();
+				bc_boxPrint();
+				id_infoPrint();
+				bc_framenamePrint();
+				mt_gotoXY(26, 1);
+				sc_memoryPrint(adress);
+				printBig();
+				goOnce();
+                sc_regPrint(12, 77);
+                mt_gotoXY(26, 1);
+
+				break;
+			case key_f6:
+			{
+				sc_regSet(IGNORE_TIMER, 1);
+				signal(SIGUSR1, stopHandler);
+				raise(SIGUSR1);
+				sc_regPrint(12, 77);
+				sc_memoryPrint(adress);
+				printBig();
+				mt_gotoXY(26, 1);
+			}
+			    break;
 			default:
 			{
 			    //

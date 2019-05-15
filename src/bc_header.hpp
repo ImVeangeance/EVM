@@ -20,7 +20,7 @@ int bc_bigcharread (int fd, int *big, int need_count, int *count);
 
 void bc_framenamePrint(void)
 {
-	mt_setfgcolor(PINK);
+	mt_setfgcolor(BLUE);
 	mt_gotoXY(2,3);
 	std::cout << " Memory ";
 	mt_gotoXY(2,70);
@@ -47,6 +47,8 @@ int bc_printA (std::string str)
 
 int bc_box(int x1, int y1, int x2, int y2)
 {
+	//mt_setbgcolor(PINK);
+	mt_setfgcolor(BLUE);
 	for(auto i = 0; i <= y2; i++) /* Left */
 	{
 		mt_gotoXY(x1 + i, y1 - 1);
@@ -78,6 +80,7 @@ int bc_box(int x1, int y1, int x2, int y2)
 		else
 			bc_printA("r");
 	}
+	mt_setfgcolor(WHITE);
 }
 
 void bc_boxPrint(void)
