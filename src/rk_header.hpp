@@ -65,7 +65,7 @@ int rk_readkey(enum keys *key)
 		*key = key_minus;
 	else if (buf[0] == 'g')
 		*key = key_run;
-	else if (buf[0] == 's')
+	else if (buf[0] == 't')
 		*key = key_step;
 	else if (buf[0] == 'q')
 		*key = key_q;

@@ -61,7 +61,7 @@ void handlerOnce(int signaly)
         newTime.it_value.tv_sec = 0;
         newTime.it_value.tv_usec = 0;
         setitimer(ITIMER_REAL, &newTime, &oldTime);
-        sc_regSet(IGNORE_TIMER, 1);
+        sc_regSet(IGNORE_TIMER, 0);
         sc_memoryPrint(adress);
         printBig();
         sc_regPrint(12, 77);
@@ -69,7 +69,8 @@ void handlerOnce(int signaly)
 }
 
 void goOnce()
-{signal(SIGALRM, handlerOnce);
+{
+    signal(SIGALRM, handlerOnce);
     newTime.it_interval.tv_sec = 0;
     newTime.it_interval.tv_usec = 0;
     newTime.it_value.tv_sec = 1;
@@ -113,7 +114,7 @@ void printBig(void)
 void ap(void)
 {
     setbuf(stdout, NULL);
-    sc_regSet(IGNORE_TIMER, 1);
+    sc_regSet(IGNORE_TIMER, 0);
     sc_memoryInit();
 	sc_regInit();
 	mt_clrscr();
@@ -123,15 +124,17 @@ void ap(void)
 	//mt_setbgcolor(RED);
 	bc_framenamePrint();
 	printBig();
-	id_infoPrint();
+	id_infoPrint(adress);
 	mt_gotoXY(26, 1);
 }
 
 int main(void)
 {
     keys key;
+    bool move = true;
 	mt_setscreensize(110, 30);
     ap();
+    sc_regPrint(12, 77);
 	while (key != key_q)
 	{
 		rk_readkey(&key);
@@ -140,6 +143,7 @@ int main(void)
 			case key_load:
 			{
 			    sc_memoryLoad("data.txt");
+				id_infoPrint(adress);
 				sc_memoryPrint(adress);
 				printBig();
 				sc_regPrint(12, 77);
@@ -149,6 +153,7 @@ int main(void)
 			case key_save:
 			{
 			    sc_memorySave("data.txt");
+				id_infoPrint(adress);
 				printBig();
 				sc_regPrint(12, 77);
 				mt_gotoXY(26, 1);
@@ -158,16 +163,26 @@ int main(void)
 			{
 			    ap();
 			    adress = 0;
+			    id_infoPrint(adress);
 			    sc_regGet(IGNORE_TIMER, &value);
 			    sc_memoryPrint(adress);
 			    sc_regPrint(12, 77);
 			    mt_gotoXY(26, 1);
+			    move = true;
+				sc_regSet(IGNORE_TIMER, 0);
+				signal(SIGUSR1, stopHandler);
+				raise(SIGUSR1);
+				sc_regPrint(12, 77);
+				sc_memoryPrint(adress);
+				printBig();
+				mt_gotoXY(26, 1);
 			}
 				break;
 			case key_up:
 			{
-			    if(adress > 9)
+			    if(adress > 9  and move == true)
 			        adress -= 10;
+			    id_infoPrint(adress);
 			    sc_memoryPrint(adress);
 			    sc_regPrint(12, 77);
 			    printBig();
@@ -176,8 +191,9 @@ int main(void)
 				break;
 			case key_down:
 			{
-			    if(adress <= 89 and adress > -1)
+			    if(adress <= 89 and adress > -1 and move == true)
 			        adress += 10, sc_regGet(IGNORE_TIMER, &value);
+			    id_infoPrint(adress);
 			    sc_memoryPrint(adress);
 			    sc_regPrint(12, 77);
 			    printBig();
@@ -186,8 +202,9 @@ int main(void)
 				break;
 			case key_right:
 			{
-			    if(adress < 99)
+			    if(adress < 99  and move == true)
 			        adress++, sc_regGet(IGNORE_TIMER, &value);
+			    id_infoPrint(adress);
 			    sc_memoryPrint(adress);
 			    sc_regPrint(12, 77);
 			    printBig();
@@ -196,8 +213,9 @@ int main(void)
 				break;
 			case key_left:
 			{
-			    if(adress > 0)
+			    if(adress > 0  and move == true)
 			        adress--, sc_regGet(IGNORE_TIMER, &value);
+			    id_infoPrint(adress);
 			    sc_memoryPrint(adress);
 			    sc_regPrint(12, 77);
 			    printBig();
@@ -206,8 +224,9 @@ int main(void)
 				break;
 			case key_plus:
 			{
-			    if(adress > -1 and adress < 100)
+			    if(adress > -1 and adress < 100 and move == true)
 			        value += 5;
+			    id_infoPrint(adress);
 			    sc_memorySet(adress, value);
 			    sc_regPrint(12, 77);
 			    sc_memoryPrint(adress);
@@ -218,8 +237,9 @@ int main(void)
 			case key_minus:
 			{
 
-			    if(value > 0 and (adress > -1 and adress < 100))
+			    if(value > 0 and (adress > -1 and adress < 100) and move == true)
 			        value -= 5;
+			    id_infoPrint(adress);
 			    sc_memorySet(adress, value);
 			    sc_memoryPrint(adress);
 			    printBig();
@@ -227,10 +247,11 @@ int main(void)
 			}
 			case key_run:
 			{
+			    move = false;
 				sc_regSet(IGNORE_TIMER, 0);
 				mt_clrscr();
+				id_infoPrint(adress);
 				bc_boxPrint();
-				id_infoPrint();
 				bc_framenamePrint();
 				sc_regPrint(12, 77);
 				sc_memoryPrint(adress);
@@ -242,25 +263,30 @@ int main(void)
 			}
 				break;
 			case key_step:
-
+            {
+                move = false;
 				sc_regSet(IGNORE_TIMER, 0);
 				mt_clrscr();
 				bc_boxPrint();
-				id_infoPrint();
 				bc_framenamePrint();
 				mt_gotoXY(26, 1);
 				sc_memoryPrint(adress);
 				printBig();
-				goOnce();
+                id_infoPrint(adress+1);
+                sc_regSet(IGNORE_TIMER, 1);
                 sc_regPrint(12, 77);
+                sc_regSet(IGNORE_TIMER, 0);
                 mt_gotoXY(26, 1);
-
+                goOnce();
+            }
 				break;
 			case key_f6:
 			{
-				sc_regSet(IGNORE_TIMER, 1);
+			    move = true;
+				sc_regSet(IGNORE_TIMER, 0);
 				signal(SIGUSR1, stopHandler);
 				raise(SIGUSR1);
+				id_infoPrint(adress);
 				sc_regPrint(12, 77);
 				sc_memoryPrint(adress);
 				printBig();

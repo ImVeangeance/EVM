@@ -12,7 +12,7 @@
 /* Space for pajilii functions */
 
 int id_accumPrint(int x, int y);
-int id_infoPrint(int x, int y);
+int id_infoPrint(int adress);
 void printBig(void);
 void ap(void);
 void stopHandler(int);
@@ -27,8 +27,11 @@ int id_accumPrint(int x, int y)
 	return 0;
 }
 
-int id_infoPrint(void)
+int id_infoPrint(int adress)
 {
+	mt_gotoXY(6,80);
+	std::cout << adress;
+	//
 	mt_gotoXY(15,45);
 	std::cout << "arrow key's - bypass the memory";
 	mt_gotoXY(16,45);
