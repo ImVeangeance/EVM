@@ -48,7 +48,7 @@ int id_infoPrint(int adress)
 	std::cout << "'q' - quite";
 	mt_gotoXY(22,45);
 	std::cout << "'g' - run";
-	std::cout << "\t's - step";
+	std::cout << "\t't' - step";
 	return 0;
 }
 
