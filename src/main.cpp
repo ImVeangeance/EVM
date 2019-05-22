@@ -28,6 +28,7 @@ void handlerRun(int signaly)
         adress++;
 	sc_memoryPrint(adress);
         printBig();
+        id_infoPrint(adress);
         sc_regPrint(12, 77);
     }
     else
