@@ -138,7 +138,7 @@ int main(void)
 {
     keys key;
     bool move = true;
-	mt_setscreensize(110, 30);
+	mt_setscreensize(96, 24);
     ap();
     sc_regPrint();
 	while (key != key_q)
@@ -274,16 +274,14 @@ int main(void)
                 move = false;
 				sc_regSet(IGNORE_TIMER, 0);
 				mt_clrscr();
+				sc_memoryPrint(adress);
 				bc_boxPrint();
 				bc_framenamePrint();
-				mt_gotoXY(26, 400);
-				sc_memoryPrint(adress);
 				printBig();
                 id_infoPrint(adress);
                 sc_regSet(IGNORE_TIMER, 1);
                 sc_regPrint();
                 sc_regSet(IGNORE_TIMER, 0);
-                mt_gotoXY(26, 400);
                 goOnce();
             }
 				break;
@@ -298,6 +296,16 @@ int main(void)
 				sc_memoryPrint(adress);
 				printBig();
 				mt_gotoXY(26, 400);
+			}
+			    break;
+			case key_blue:
+			{
+                //
+			}
+			    break;
+			case key_red:
+			{
+                //
 			}
 			    break;
 			default:

@@ -29,6 +29,10 @@ enum keys {
 	key_minus,
 	key_run,
 	key_step,
+	key_blue,
+	key_green,
+	key_red,
+	key_yellow,
 };
 
 int rk_readkey(keys *key);
@@ -70,6 +74,14 @@ int rk_readkey(enum keys *key)
 		*key = key_step;
 	else if (buf[0] == 'q')
 		*key = key_q;
+	else if (buf[0] == 'z')
+		*key = key_blue;
+	else if (buf[0] == 'x')
+		*key = key_green;
+	else if (buf[0] == 'c')
+		*key = key_red;
+	else if (buf[0] == 'v')
+		*key = key_yellow;
 	else
 		*key = key_other;
 	rk_mytermrestore();

@@ -45,6 +45,8 @@ void bc_framenamePrint(void)
 	std::cout << " Number in zoom ";
 	mt_gotoXY(14,45);
 	std::cout << " Keys of action ";
+	mt_gotoXY(14,87);
+	std::cout << " Color ";
 	mt_setfgcolor(BLACK);
 }
 
@@ -103,6 +105,7 @@ void bc_boxPrint(void)
 	bc_box(14,3,40,9); // Big char
 	bc_box(11,66,24,2);
 	bc_box(14,45,39,9); // Action
+	bc_box(14,87,9,9);
 }
 
 int bc_printbigchar(int a[2], int x, int y, enum colors color1, enum colors color2)
