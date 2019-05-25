@@ -29,8 +29,10 @@ int id_accumPrint(int x, int y)
 
 int id_infoPrint(int adress)
 {
-	mt_gotoXY(6,80);
-	std::cout << adress;
+	int memo;
+	sc_memoryGet(adress, &memo);
+	mt_gotoXY(6,76);
+	std::cout << std::setw(3) << std::setfill('0') << adress+1 << " - +" << std::setw(4) << std::setfill('0') << std::hex << memo << std::dec;
 	//
 	mt_gotoXY(15,45);
 	std::cout << "arrow key's - bypass the memory";

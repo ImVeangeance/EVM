@@ -200,6 +200,7 @@ int sc_regPrint(int x, int y)
 		mt_setfgcolor(GREEN);
 	std::cout << "I";
 	mt_setfgcolor(WHITE);
+	mt_gotoXY(26, 1);
 }
 
 int sc_commandEncode(int command, int operand, int *value)

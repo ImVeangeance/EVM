@@ -26,8 +26,9 @@ void handlerRun(int signaly)
     if((value == 0) & (adress + 1 < 100))
     {
         adress++;
-	sc_memoryPrint(adress);
+	    sc_memoryPrint(adress);
         printBig();
+        id_infoPrint(adress);
         sc_regPrint(12, 77);
     }
     else
@@ -51,10 +52,10 @@ void handlerOnce(int signaly)
     sc_regGet(IGNORE_TIMER, &value);
     if((value == 0) & (adress + 1 < 100))
     {
+        mt_clrscr();
+        bc_boxPrint();
         adress++;
-        sc_memoryPrint(adress);
         printBig();
-        sc_regPrint(12, 77);
         signal(SIGALRM, handlerOnce);
         newTime.it_interval.tv_sec = 0;
         newTime.it_interval.tv_usec = 0;
@@ -65,6 +66,7 @@ void handlerOnce(int signaly)
         sc_memoryPrint(adress);
         printBig();
         sc_regPrint(12, 77);
+        mt_gotoXY(26, 1);
     }
 }
 
@@ -83,9 +85,11 @@ void runOnMemory()
     signal(SIGALRM, handlerRun);
     newTime.it_interval.tv_sec = 1;
     newTime.it_interval.tv_usec = 0;
+    id_infoPrint(adress);
     newTime.it_value.tv_sec = 1;
     newTime.it_value.tv_usec = 0;
     setitimer(ITIMER_REAL, &newTime, &oldTime);
+
 }
 
 void printBig(void)
@@ -97,15 +101,15 @@ void printBig(void)
     sstream << std::setw(4) << std::setfill('0') << std::hex << value  << std::dec;
 	str = sstream.str();
 	chooseBig(h, '+');
-	bc_printbigchar(h, 15, 3, BLACK, BLUE);
+	bc_printbigchar(h, 15, 3, BLUE, BLACK);
 	chooseBig(h, str[0]);
-	bc_printbigchar(h, 15, 11, BLACK, BLUE);
+	bc_printbigchar(h, 15, 11, BLUE, BLACK);
 	chooseBig(h, str[1]);
-	bc_printbigchar(h, 15, 19, BLACK, BLUE);
+	bc_printbigchar(h, 15, 19, BLUE, BLACK);
 	chooseBig(h, str[2]);
-	bc_printbigchar(h, 15, 27, BLACK, BLUE);
+	bc_printbigchar(h, 15, 27, BLUE, BLACK);
 	chooseBig(h, str[3]);
-	bc_printbigchar(h, 15, 35, BLACK, BLUE);
+	bc_printbigchar(h, 15, 35, BLUE, BLACK);
 	mt_setbgcolor(BLACK);
 	mt_setfgcolor(WHITE);
 	mt_gotoXY(25, 1);
@@ -226,8 +230,8 @@ int main(void)
 			{
 			    if(adress > -1 and adress < 100 and move == true)
 			        value += 5;
-			    id_infoPrint(adress);
 			    sc_memorySet(adress, value);
+			    id_infoPrint(adress);
 			    sc_regPrint(12, 77);
 			    sc_memoryPrint(adress);
 			    printBig();
@@ -239,24 +243,25 @@ int main(void)
 
 			    if(value > 0 and (adress > -1 and adress < 100) and move == true)
 			        value -= 5;
-			    id_infoPrint(adress);
 			    sc_memorySet(adress, value);
+			    id_infoPrint(adress);
 			    sc_memoryPrint(adress);
 			    printBig();
 			    mt_gotoXY(26, 1);
 			}
+			    break;
 			case key_run:
 			{
 			    move = false;
 				sc_regSet(IGNORE_TIMER, 0);
 				mt_clrscr();
-				id_infoPrint(adress);
 				bc_boxPrint();
 				bc_framenamePrint();
 				sc_regPrint(12, 77);
 				sc_memoryPrint(adress);
 				printBig();
 				sc_regPrint(12, 77);
+				id_infoPrint(adress);
 				runOnMemory();
 				sc_regPrint(12, 77);
 			    mt_gotoXY(26, 1);
@@ -272,7 +277,7 @@ int main(void)
 				mt_gotoXY(26, 1);
 				sc_memoryPrint(adress);
 				printBig();
-                id_infoPrint(adress+1);
+                id_infoPrint(adress);
                 sc_regSet(IGNORE_TIMER, 1);
                 sc_regPrint(12, 77);
                 sc_regSet(IGNORE_TIMER, 0);
