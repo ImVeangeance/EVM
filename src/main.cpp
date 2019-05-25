@@ -29,7 +29,7 @@ void handlerRun(int signaly)
 	    sc_memoryPrint(adress);
         printBig();
         id_infoPrint(adress);
-        sc_regPrint(12, 77);
+        sc_regPrint();
     }
     else
     {
@@ -42,7 +42,7 @@ void handlerRun(int signaly)
         sc_regSet(IGNORE_TIMER, 1);
         sc_memoryPrint(adress);
         printBig();
-        sc_regPrint(12, 77);
+        sc_regPrint();
     }
 }
 
@@ -53,9 +53,7 @@ void handlerOnce(int signaly)
     if((value == 0) & (adress + 1 < 100))
     {
         mt_clrscr();
-        bc_boxPrint();
         adress++;
-        printBig();
         signal(SIGALRM, handlerOnce);
         newTime.it_interval.tv_sec = 0;
         newTime.it_interval.tv_usec = 0;
@@ -63,10 +61,14 @@ void handlerOnce(int signaly)
         newTime.it_value.tv_usec = 0;
         setitimer(ITIMER_REAL, &newTime, &oldTime);
         sc_regSet(IGNORE_TIMER, 0);
-        sc_memoryPrint(adress);
+        mt_clrscr();
+        bc_boxPrint();
+        bc_framenamePrint();
         printBig();
-        sc_regPrint(12, 77);
-        mt_gotoXY(26, 1);
+        sc_regPrint();
+        sc_memoryPrint(adress);
+        id_infoPrint(adress);
+        mt_gotoXY(26, 400);
     }
 }
 
@@ -112,7 +114,7 @@ void printBig(void)
 	bc_printbigchar(h, 15, 35, BLUE, BLACK);
 	mt_setbgcolor(BLACK);
 	mt_setfgcolor(WHITE);
-	mt_gotoXY(25, 1);
+	mt_gotoXY(25, 400);
 }
 
 void ap(void)
@@ -124,12 +126,12 @@ void ap(void)
 	mt_clrscr();
 	bc_boxPrint();
 	sc_memoryPrint(adress);
-	sc_regPrint(12, 77);
+	sc_regPrint();
 	//mt_setbgcolor(RED);
 	bc_framenamePrint();
 	printBig();
 	id_infoPrint(adress);
-	mt_gotoXY(26, 1);
+	mt_gotoXY(26, 400);
 }
 
 int main(void)
@@ -138,11 +140,11 @@ int main(void)
     bool move = true;
 	mt_setscreensize(110, 30);
     ap();
-    sc_regPrint(12, 77);
+    sc_regPrint();
 	while (key != key_q)
 	{
 		rk_readkey(&key);
-        switch (key)
+        switch(key)
 		{
 			case key_load:
 			{
@@ -150,8 +152,8 @@ int main(void)
 				id_infoPrint(adress);
 				sc_memoryPrint(adress);
 				printBig();
-				sc_regPrint(12, 77);
-				mt_gotoXY(26, 1);
+				sc_regPrint();
+				mt_gotoXY(26, 400);
 			}
 				break;
 			case key_save:
@@ -159,8 +161,8 @@ int main(void)
 			    sc_memorySave("data.txt");
 				id_infoPrint(adress);
 				printBig();
-				sc_regPrint(12, 77);
-				mt_gotoXY(26, 1);
+				sc_regPrint();
+				mt_gotoXY(26, 400);
 			}
 				break;
 			case key_reset:
@@ -170,16 +172,16 @@ int main(void)
 			    id_infoPrint(adress);
 			    sc_regGet(IGNORE_TIMER, &value);
 			    sc_memoryPrint(adress);
-			    sc_regPrint(12, 77);
+			    sc_regPrint();
 			    mt_gotoXY(26, 1);
 			    move = true;
 				sc_regSet(IGNORE_TIMER, 0);
 				signal(SIGUSR1, stopHandler);
 				raise(SIGUSR1);
-				sc_regPrint(12, 77);
+				sc_regPrint();
 				sc_memoryPrint(adress);
 				printBig();
-				mt_gotoXY(26, 1);
+				mt_gotoXY(26, 400);
 			}
 				break;
 			case key_up:
@@ -188,9 +190,9 @@ int main(void)
 			        adress -= 10;
 			    id_infoPrint(adress);
 			    sc_memoryPrint(adress);
-			    sc_regPrint(12, 77);
+			    sc_regPrint();
 			    printBig();
-			    mt_gotoXY(26, 1);
+			    mt_gotoXY(26, 400);
 			}
 				break;
 			case key_down:
@@ -199,9 +201,9 @@ int main(void)
 			        adress += 10, sc_regGet(IGNORE_TIMER, &value);
 			    id_infoPrint(adress);
 			    sc_memoryPrint(adress);
-			    sc_regPrint(12, 77);
+			    sc_regPrint();
 			    printBig();
-			    mt_gotoXY(26, 1);
+			    mt_gotoXY(26, 400);
 			}
 				break;
 			case key_right:
@@ -210,9 +212,9 @@ int main(void)
 			        adress++, sc_regGet(IGNORE_TIMER, &value);
 			    id_infoPrint(adress);
 			    sc_memoryPrint(adress);
-			    sc_regPrint(12, 77);
+			    sc_regPrint();
 			    printBig();
-			    mt_gotoXY(26, 1);
+			    mt_gotoXY(26, 400);
 			}
 				break;
 			case key_left:
@@ -221,9 +223,9 @@ int main(void)
 			        adress--, sc_regGet(IGNORE_TIMER, &value);
 			    id_infoPrint(adress);
 			    sc_memoryPrint(adress);
-			    sc_regPrint(12, 77);
+			    sc_regPrint();
 			    printBig();
-			    mt_gotoXY(26, 1);
+			    mt_gotoXY(26, 400);
 			}
 				break;
 			case key_plus:
@@ -232,10 +234,10 @@ int main(void)
 			        value += 5;
 			    sc_memorySet(adress, value);
 			    id_infoPrint(adress);
-			    sc_regPrint(12, 77);
+			    sc_regPrint();
 			    sc_memoryPrint(adress);
 			    printBig();
-			    mt_gotoXY(26, 1);
+			    mt_gotoXY(26, 400);
 			}
 				break;
 			case key_minus:
@@ -247,7 +249,7 @@ int main(void)
 			    id_infoPrint(adress);
 			    sc_memoryPrint(adress);
 			    printBig();
-			    mt_gotoXY(26, 1);
+			    mt_gotoXY(26, 400);
 			}
 			    break;
 			case key_run:
@@ -257,14 +259,14 @@ int main(void)
 				mt_clrscr();
 				bc_boxPrint();
 				bc_framenamePrint();
-				sc_regPrint(12, 77);
+				sc_regPrint();
 				sc_memoryPrint(adress);
 				printBig();
-				sc_regPrint(12, 77);
+				sc_regPrint();
 				id_infoPrint(adress);
 				runOnMemory();
-				sc_regPrint(12, 77);
-			    mt_gotoXY(26, 1);
+				sc_regPrint();
+			    mt_gotoXY(26, 400);
 			}
 				break;
 			case key_step:
@@ -274,28 +276,28 @@ int main(void)
 				mt_clrscr();
 				bc_boxPrint();
 				bc_framenamePrint();
-				mt_gotoXY(26, 1);
+				mt_gotoXY(26, 400);
 				sc_memoryPrint(adress);
 				printBig();
                 id_infoPrint(adress);
                 sc_regSet(IGNORE_TIMER, 1);
-                sc_regPrint(12, 77);
+                sc_regPrint();
                 sc_regSet(IGNORE_TIMER, 0);
-                mt_gotoXY(26, 1);
+                mt_gotoXY(26, 400);
                 goOnce();
             }
 				break;
 			case key_f6:
 			{
 			    move = true;
-				sc_regSet(IGNORE_TIMER, 0);
+				sc_regSet(IGNORE_TIMER, 1);
 				signal(SIGUSR1, stopHandler);
 				raise(SIGUSR1);
 				id_infoPrint(adress);
-				sc_regPrint(12, 77);
+				sc_regPrint();
 				sc_memoryPrint(adress);
 				printBig();
-				mt_gotoXY(26, 1);
+				mt_gotoXY(26, 400);
 			}
 			    break;
 			default:

@@ -21,16 +21,26 @@ int bc_bigcharread (int fd, int *big, int need_count, int *count);
 void bc_framenamePrint(void)
 {
 	mt_setfgcolor(BLUE);
+	mt_gotoXY(11,66);
+	std::cout << " Author ";
 	mt_gotoXY(2,3);
 	std::cout << " Memory ";
-	mt_gotoXY(2,70);
+	mt_gotoXY(2,66);
 	std::cout << " Accumulator ";
-	mt_gotoXY(5,70);
+	mt_gotoXY(5,66);
 	std::cout << " Instruction Counter ";
-	mt_gotoXY(8,70);
+	mt_gotoXY(8,66);
 	std::cout << " Operation ";
-	mt_gotoXY(11,70);
-	std::cout << " Flags ";
+	mt_gotoXY(3,92);
+	std::cout << "F";
+	mt_gotoXY(4,92);
+	std::cout << "l";
+	mt_gotoXY(5,92);
+	std::cout << "a";
+	mt_gotoXY(6,92);
+	std::cout << "g";
+	mt_gotoXY(7,92);
+	std::cout << "s";
 	mt_gotoXY(14,3);
 	std::cout << " Number in zoom ";
 	mt_gotoXY(14,45);
@@ -85,13 +95,14 @@ int bc_box(int x1, int y1, int x2, int y2)
 
 void bc_boxPrint(void)
 {
-	bc_box(2,3,60,11);
-	bc_box(2,70,24,2);
-	bc_box(5,70,24,2);
-	bc_box(8,70,24,2);
-	bc_box(11,70,24,2);
-	bc_box(14,3,40,9);
-	bc_box(14,45,39,9);
+	bc_box(2,3,60,11); // Memory
+	bc_box(2,66,24,2); // Accumulator
+	bc_box(5,66,24,2); // Coms
+	bc_box(8,66,24,2); // Operand
+	bc_box(2,93,3,8); // Flag
+	bc_box(14,3,40,9); // Big char
+	bc_box(11,66,24,2);
+	bc_box(14,45,39,9); // Action
 }
 
 int bc_printbigchar(int a[2], int x, int y, enum colors color1, enum colors color2)

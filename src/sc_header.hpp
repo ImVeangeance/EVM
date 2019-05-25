@@ -36,7 +36,7 @@ int sc_regSet(int registr, int value);
 
 int sc_regGet(int registr, int *value);
 
-int sc_regPrint(int x, int y);
+int sc_regPrint(void);
 
 int sc_commandEncode (int command, int operand, int *value);
 
@@ -120,6 +120,7 @@ int sc_memoryPrint(int adress)
 			mt_setfgcolor(WHITE);
 		}
 	}
+	mt_gotoXY(26, 400);
 	return 0;
 }
 
@@ -165,42 +166,42 @@ int sc_regGet(int registr, int *value)
 	return 0;
 }
 
-int sc_regPrint(int x, int y)
+int sc_regPrint(void)
 {
 	int value;
-	mt_gotoXY(x, y + 2);
+	mt_gotoXY(3, 94);
 	sc_regGet(ErrorMemoryOut, &value);
 	if(value)
 		mt_setfgcolor(RED);
 	else
-		mt_setfgcolor(GREEN);
+		mt_setfgcolor(BLUE);
 	std::cout << "M";
 	mt_setfgcolor(WHITE);
-	mt_gotoXY(x , y + 4);
+	mt_gotoXY(5, 94);
 	sc_regGet(ErrorInvalidReg, &value);
 	if(value)
 		mt_setfgcolor(RED);
 	else
-		mt_setfgcolor(GREEN);
+		mt_setfgcolor(BLUE);
 	std::cout << "R";
 	mt_setfgcolor(WHITE);
-	mt_gotoXY(x , y + 6);
+	mt_gotoXY(7, 94);
 	sc_regGet(ErrorWrongCom, &value);
 	if(value)
 		mt_setfgcolor(RED);
 	else
-		mt_setfgcolor(GREEN);
+		mt_setfgcolor(BLUE);
 	std::cout << "W";
 	mt_setfgcolor(WHITE);
-	mt_gotoXY(x , y + 8);
+	mt_gotoXY(9, 94);
 	sc_regGet(IGNORE_TIMER, &value);
 	if(value)
 		mt_setfgcolor(RED);
 	else
-		mt_setfgcolor(GREEN);
+		mt_setfgcolor(BLUE);
 	std::cout << "I";
 	mt_setfgcolor(WHITE);
-	mt_gotoXY(26, 1);
+	mt_gotoXY(26, 400);
 }
 
 int sc_commandEncode(int command, int operand, int *value)
