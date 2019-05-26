@@ -1,0 +1,19 @@
+00	READ 99
+01	LOAD 99		; B1
+02	JZ 11		; B2->A1	Check 0!
+03	LOAD 97		; B3
+04	JZ 15		; B4->C1	Check 97 = 0
+05	SUB 98		; B5 		Acc--
+06	JZ 13		; B6->A3	Check end
+07	STORE 97	; B7
+08	MUL 99		; B8
+09	STORE 99	; B9
+10	JUMP 03		; B10->B3
+11	LOAD 98		; A1
+12 	STORE 99	; A2
+13	WRITE 99	; A3
+14	HALT 00		; A4
+15	LOAD 99		; C1
+16	STORE 97	; C2
+17	JUMP 05		; C3->B5
+98	=	+1		; test 98

@@ -1,4 +1,11 @@
+#include "ass.hpp"
+#include <iostream>
+#include <termios.h>
+#include <unistd.h>
 #include <sys/ioctl.h>
+#include <sys/time.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 #ifndef mt_header_hpp_
 #define mt_header_hpp_
 

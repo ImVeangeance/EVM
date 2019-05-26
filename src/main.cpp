@@ -1,7 +1,19 @@
+#include "ass.hpp"
 #include <iostream>
+#include <cmath>
 #include <string>
-#include "sc_header.hpp"
+#include <termios.h>
+#include <unistd.h>
+#include <fstream>
+#include <iomanip>
+#include <termios.h>
+#include <signal.h>
+#include <sys/ioctl.h>
+#include <sys/time.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 #include "mt_header.hpp"
+#include "sc_header.hpp"
 #include "bc_header.hpp"
 #include "rk_header.hpp"
 #include "id_header.hpp"
@@ -25,8 +37,8 @@ void handlerRun(int signaly)
     sc_regGet(ErrorTimer, &value);
     if((value == 0) & (adress + 1 < 100))
     {
-        adress++;
-	    sc_memoryPrint(adress);
+        adress++;	
+	sc_memoryPrint(adress);
         printBig();
         id_infoPrint(adress);
         sc_regPrint();
@@ -270,44 +282,50 @@ int main(void)
 			}
 				break;
 			case key_step:
-            {
-                move = false;
+            		{
+                		move = false;
 				sc_regSet(ErrorTimer, 0);
 				mt_clrscr();
 				sc_memoryPrint(adress);
 				bc_boxPrint();
 				bc_framenamePrint();
 				printBig();
-                id_infoPrint(adress);
-                sc_regSet(ErrorTimer, 1);
-                sc_regPrint();
-                sc_regSet(ErrorTimer, 0);
-                goOnce();
-            }
-				break;
+                		id_infoPrint(adress);
+               			 sc_regSet(ErrorTimer, 1);
+               			 sc_regPrint();
+               			 sc_regSet(ErrorTimer, 0);
+               			 goOnce();
+            		}		
+			    break;
+			case key_f5:
+			{
+                		instructionCounter = adress;
+	          		id_infoPrint(adress);
+	          		mt_gotoXY(26, 400);
+	          		fflush(stdout);
+			}
+			    break;
+			case key_f4:
+			{
+                		sc_memoryGet(adress, &accumulator);
+				id_infoPrint(adress);
+	           		mt_gotoXY(26, 400);
+	           		fflush(stdout);
+			}
+			    break;
 			case key_f6:
 			{
-			    move = true;
-				sc_regSet(ErrorTimer, 1);
+			    	move = false;
 				signal(SIGUSR1, stopHandler);
 				raise(SIGUSR1);
 				id_infoPrint(adress);
+				sc_regSet(ErrorTimer, 1);
 				sc_regPrint();
 				sc_memoryPrint(adress);
 				printBig();
 				mt_gotoXY(26, 400);
 			}
-			    break;
-			case key_f5:
-			{
-                //
-			}
-			    break;
-			case key_f4:
-			{
-                //
-			}
-			    break;
+				break;
 			default:
 			{
 			    //

@@ -1,17 +1,23 @@
 #include <iostream>
+#include <string>
+#include <termios.h>
+#include <unistd.h>
+#include <fstream>
+#include <iomanip>
+#include <termios.h>
 #include <signal.h>
 #include <sys/ioctl.h>
 #include <sys/time.h>
-#include "sc_header.hpp"
+#include <fcntl.h>
+#include <sys/stat.h>
 #include "mt_header.hpp"
+#include "sc_header.hpp"
 #include "bc_header.hpp"
-#include "rk_header.hpp"
 #ifndef id_header_hpp_
 #define id_header_hpp_
 
 /* Space for pajilii functions */
 
-int id_accumPrint(int x, int y);
 int id_infoPrint(int adress);
 void printBig(void);
 void ap(void);
@@ -21,19 +27,25 @@ void handlerRun(int);
 void goOnce(void);
 void runOnMemory(void);
 
-int id_accumPrint(int x, int y)
-{
-	//
-	return 0;
-}
 
 int id_infoPrint(int adress)
 {
 	int memo;
 	sc_memoryGet(adress, &memo);
+	mt_gotoXY(3, 74);	
+	if (accumulator < 0)
+		std::cout << std::hex << -accumulator;
+	else
+		std::cout << "+" << accumulator;
+	std::cout.unsetf(std::ios::hex);
+	std::cout.setf(std::ios::dec);
+	mt_gotoXY(9, 74);
+	std::cout << "+" << adress << " : " << std::hex << memo;
+	//sc_memoryGet(adress, &memo);
+	std::cout.unsetf(std::ios::hex);
+	std::cout.setf(std::ios::dec);
 	mt_gotoXY(6,76);
-	std::cout << std::setw(3) << std::setfill('0') << adress+1;// << " - +" << std::setw(4) << std::setfill('0') << std::hex << memo << std::dec;
-	//
+	std::cout << std::setw(3) << std::setfill('0') << adress+1;
 	mt_gotoXY(15,45);
 	std::cout << "arrow key's - bypass the memory";
 	mt_gotoXY(16,45);

@@ -1,17 +1,5 @@
-#include <iostream>
-#include <cmath>
-#include <string>
-#include "mt_header.hpp"
-#include "sc_header.hpp"
-#include "bc_header.hpp"
-#include "rk_header.hpp"
-#include "id_header.hpp"
 #ifndef ass_hpp_
 #define ass_hpp_
-
-// MAT' WLUHA
-
-//#define _GNU_SOURCE
 
 int accumulator;
 int instructionCounter;

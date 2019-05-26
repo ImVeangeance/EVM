@@ -1,5 +1,22 @@
+#include <iostream>
+#include <cmath>
+#include <string>
+#include <termios.h>
+#include <unistd.h>
+#include <fstream>
+#include <iomanip>
+#include <termios.h>
+#include <signal.h>
+#include <sys/ioctl.h>
+#include <sys/time.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include "mt_header.hpp"
+#include "sc_header.hpp"
+#include "bc_header.hpp"
+#include "rk_header.hpp"
+#include "id_header.hpp"
 #include "ass.hpp"
-
 #define SIZE 100
 
 int read_file(char *file_name)
@@ -12,18 +29,14 @@ int read_file(char *file_name)
 		printf("No such file\n");
 		return 1;
 	}
-
 	sc_memoryInit();
-
 	while (getline(&buf, &len, in) != -1) {
 		if (read_string(buf, len))
 			return 1;
 	}
 
 	fclose(in);
-
 	free(buf);
-
 	return 0;
 }
 
@@ -42,9 +55,9 @@ int read_string(char *str, int len)
 	}
 	ind = get_number(str, buf, lb, rb);
 	skip_space(str, &lb, &rb, len);
-
 	search_space(str, buf, &lb, &rb, len);
-	for (int i = lb; i < rb; i++) {
+	for (int i = lb; i < rb; i++)
+	{
 		if (!isalpha(str[i]) && str[i] != '=')
 			return 1;
 	}
@@ -53,7 +66,8 @@ int read_string(char *str, int len)
     skip_space(str, &lb, &rb, len);
 
     search_space(str, buf, &lb, &rb, len);
-	for (int i = lb; i < rb; i++) {
+	for (int i = lb; i < rb; i++)
+	{
 		if (i == lb && str[i] == '+')
 			continue;
 		if (!isdigit(str[i]))
@@ -63,13 +77,9 @@ int read_string(char *str, int len)
 	skip_space(str, &lb, &rb, len);
 
 	if (command != 1)
-	{
         sc_commandEncode(command, operand, &value);
-	}
 	else
-	{
 		value |= operand;
-	}
 	sc_memorySet(ind, value);
 	free(buf);
 	return 0;
@@ -97,7 +107,6 @@ int search_space(char *str, char *buf, int *lb, int *rb, int len)
 {
 	while (str[*rb] != ' ' && str[*rb] != '\t' && str[*rb] != '\n' && *rb < len)
 		(*rb)++;
-
 	#if 0
 	char tmp;
 	printf("До пробела: ");
@@ -109,7 +118,6 @@ int search_space(char *str, char *buf, int *lb, int *rb, int len)
 	printf("%s\n", &buf[*lb]);
 	buf[*rb] = tmp;
 	#endif
-
 	return 0;
 }
 
@@ -117,7 +125,6 @@ int get_command(char *str, char *buf, int lb, int rb)
 {
 	buf = strcpy(buf, str);
 	buf[rb] = '\0';
-
 	if (!strcmp(&buf[lb], "READ"))
 		return READ;
 	if (!strcmp(&buf[lb], "WRITE"))
@@ -144,7 +151,6 @@ int get_command(char *str, char *buf, int lb, int rb)
 		return HALT;
 	if (!strcmp(&buf[lb], "="))
 		return 1;
-
 	return 0;
 }
 
@@ -167,11 +173,8 @@ int CU(void)
 		sc_regSet(ErrorTimer, 1);
 		return 1;
 	}
-
 	if (command >= 0x30 && command <= 0x33)
-	{
 		ALU(command, operand);
-	}
 	else
 	{
 		switch (command)

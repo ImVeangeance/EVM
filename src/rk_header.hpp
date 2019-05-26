@@ -1,10 +1,15 @@
-#include <fstream>
 #include <iostream>
-#include <iomanip>
-#include <cmath>
 #include <termios.h>
 #include <unistd.h>
+#include <fstream>
+#include <iomanip>
 #include <string.h>
+#include <termios.h>
+#include <signal.h>
+#include <sys/ioctl.h>
+#include <sys/time.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 #ifndef rk_header_hpp_
 #define rk_header_hpp_
 

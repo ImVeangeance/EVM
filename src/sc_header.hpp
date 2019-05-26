@@ -1,18 +1,24 @@
-#include <fstream>
 #include <iostream>
+#include <termios.h>
+#include <unistd.h>
+#include <fstream>
 #include <iomanip>
-#include <cmath>
-#include <string>
+#include <termios.h>
+#include <signal.h>
+#include <sys/ioctl.h>
+#include <sys/time.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 #include "mt_header.hpp"
 #ifndef sc_header_hpp_
 #define sc_header_hpp_
 
 #define ErrorMemoryOut 0b01 // M
 #define ErrorInvalidReg 0b10 // R
-#define ErrorWrongCom 0b11 // E
-#define ErrorTimer 0b100 // T
-#define ErrorDivisionZero 0b101 // O
-#define ErrorInvalidValue 0b110 // P
+#define ErrorWrongCom 0b100 // E
+#define ErrorTimer 0b1000 // T
+#define ErrorDivisionZero 0b10000 // O
+#define ErrorInvalidValue 0b100000 // P
 
 
 int massive[100];
@@ -189,7 +195,7 @@ int sc_regPrint(void)
 	else
 		mt_setfgcolor(GREEN);
 	std::cout << "R";
-	mt_setfgcolor(WHITE);
+	mt_setfgcolor(GREEN);
 	mt_gotoXY(7, 94);
 	sc_regGet(ErrorWrongCom, &value);
 	if(value)
@@ -197,6 +203,7 @@ int sc_regPrint(void)
 	else
 		mt_setfgcolor(GREEN);
 	std::cout << "W";
+	mt_setfgcolor(GREEN);
 	mt_gotoXY(9, 94);
 	sc_regGet(ErrorDivisionZero, &value);
 	if(value)
@@ -204,15 +211,15 @@ int sc_regPrint(void)
 	else
 		mt_setfgcolor(GREEN);
 	std::cout << "0";
-	mt_setfgcolor(WHITE);
+	mt_setfgcolor(GREEN);
 	mt_gotoXY(11, 94);
-	sc_regGet(ErrorInvalidReg, &value);
+	sc_regGet(ErrorInvalidValue, &value);
 	if(value)
 		mt_setfgcolor(RED);
 	else
 		mt_setfgcolor(GREEN);
 	std::cout << "V";
-	mt_setfgcolor(WHITE);
+	mt_setfgcolor(GREEN);
 	mt_gotoXY(13, 94);
 	sc_regGet(ErrorTimer, &value);
 	if(value)
