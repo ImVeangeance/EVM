@@ -101,7 +101,7 @@ void bc_boxPrint(void)
 	bc_box(2,66,24,2); // Accumulator
 	bc_box(5,66,24,2); // Coms
 	bc_box(8,66,24,2); // Operand
-	bc_box(2,93,3,8); // Flag
+	bc_box(2,93,3,10); // Flag
 	bc_box(14,3,40,9); // Big char
 	bc_box(11,66,24,2);
 	bc_box(14,45,39,9); // Action

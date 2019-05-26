@@ -2,7 +2,7 @@
 #ifndef mt_header_hpp_
 #define mt_header_hpp_
 
-enum colors {RED = 88, BLUE = 33, GREEN = 22, WHITE = 255, PINK = 207, BLACK = 232};
+enum colors {RED = 1, BLUE = 33,/*33, 20*/ PURPLE = 55, GREEN = 22, WHITE = 255, PINK = 207, BLACK = 16};
 
 int mt_clrscr(void);
 int mt_gotoXY (int x, int y);
@@ -23,7 +23,6 @@ int mt_gotoXY(int x, int y)
 	return 0;
 }
 
-
 int mt_getscreensize(int &rows, int &cols)
 {
 	winsize jopa;
@@ -34,10 +33,9 @@ int mt_getscreensize(int &rows, int &cols)
 	return 0;
 }
 
-
 int mt_setscreensize(int rows, int cols)
 {
-	printf("\E[8;%d;%d;t", cols, rows);
+	std::cout << "\E[8;" << cols << ";" << rows << ";t";
 	return 0;
 }
 
@@ -52,9 +50,5 @@ int mt_setbgcolor(enum colors color)
 	std::cout << "\E[48;5;" << color << "m";
 	return 0;
 }
-/*
-	set_a_background=\E[4%p1%dm
-	set_a_foreground=\E[3%p1%dm
-*/
 
 #endif

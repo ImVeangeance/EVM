@@ -177,7 +177,7 @@ int sc_regPrint(void)
 	if(value)
 		mt_setfgcolor(RED);
 	else
-		mt_setfgcolor(BLUE);
+		mt_setfgcolor(GREEN);
 	std::cout << "M";
 	mt_setfgcolor(WHITE);
 	mt_gotoXY(5, 94);
@@ -185,25 +185,34 @@ int sc_regPrint(void)
 	if(value)
 		mt_setfgcolor(RED);
 	else
-		mt_setfgcolor(BLUE);
-	std::cout << "R";
+		mt_setfgcolor(GREEN);
+	std::cout << "I";
 	mt_setfgcolor(WHITE);
 	mt_gotoXY(7, 94);
 	sc_regGet(ErrorWrongCom, &value);
 	if(value)
 		mt_setfgcolor(RED);
 	else
-		mt_setfgcolor(BLUE);
+		mt_setfgcolor(GREEN);
 	std::cout << "W";
-	mt_setfgcolor(WHITE);
 	mt_gotoXY(9, 94);
+	sc_regGet(ErrorDivisionZero, &value);
+	if(value)
+		mt_setfgcolor(RED);
+	else
+		mt_setfgcolor(GREEN);
+	std::cout << "0";
+	mt_setfgcolor(WHITE);
+	mt_setfgcolor(WHITE);
+	mt_gotoXY(11, 94);
 	sc_regGet(ErrorTimer, &value);
 	if(value)
 		mt_setfgcolor(RED);
 	else
-		mt_setfgcolor(BLUE);
-	std::cout << "I";
+		mt_setfgcolor(GREEN);
+	std::cout << "T";
 	mt_setfgcolor(WHITE);
+
 	mt_gotoXY(26, 400);
 }
 
