@@ -16,7 +16,6 @@ enum keys {
 	key_down,
 	key_right,
 	key_left,
-	key_f5,
 	key_f6,
 	key_load,
 	key_save,
@@ -29,10 +28,8 @@ enum keys {
 	key_minus,
 	key_run,
 	key_step,
-	key_blue,
-	key_green,
-	key_red,
-	key_yellow,
+	key_f5,  //accum
+	key_f4, // instructionCounter
 };
 
 int rk_readkey(keys *key);
@@ -54,6 +51,8 @@ int rk_readkey(enum keys *key)
 		*key = key_right;
 	else if (strcmp(buf, "\E[D") == 0)
 		*key = key_left;
+	else if (strcmp(buf, "\E[OS") == 0)
+		*key = key_f4;
 	else if (strcmp(buf, "\E[15~") == 0)
 		*key = key_f5;
 	else if (strcmp(buf, "\E[17~") == 0)

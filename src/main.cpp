@@ -22,7 +22,7 @@ void stopHandler(int signaly)
 void handlerRun(int signaly)
 {
     int value;
-    sc_regGet(IGNORE_TIMER, &value);
+    sc_regGet(ErrorTimer, &value);
     if((value == 0) & (adress + 1 < 100))
     {
         adress++;
@@ -39,7 +39,7 @@ void handlerRun(int signaly)
         newTime.it_value.tv_sec = 0;
         newTime.it_value.tv_usec = 0;
         setitimer(ITIMER_REAL, &newTime, &oldTime);
-        sc_regSet(IGNORE_TIMER, 1);
+        sc_regSet(ErrorTimer, 1);
         sc_memoryPrint(adress);
         printBig();
         sc_regPrint();
@@ -49,7 +49,7 @@ void handlerRun(int signaly)
 void handlerOnce(int signaly)
 {
     int value;
-    sc_regGet(IGNORE_TIMER, &value);
+    sc_regGet(ErrorTimer, &value);
     if((value == 0) & (adress + 1 < 100))
     {
         mt_clrscr();
@@ -60,7 +60,7 @@ void handlerOnce(int signaly)
         newTime.it_value.tv_sec = 0;
         newTime.it_value.tv_usec = 0;
         setitimer(ITIMER_REAL, &newTime, &oldTime);
-        sc_regSet(IGNORE_TIMER, 0);
+        sc_regSet(ErrorTimer, 0);
         mt_clrscr();
         bc_boxPrint();
         bc_framenamePrint();
@@ -120,7 +120,7 @@ void printBig(void)
 void ap(void)
 {
     setbuf(stdout, NULL);
-    sc_regSet(IGNORE_TIMER, 0);
+    sc_regSet(ErrorTimer, 0);
     sc_memoryInit();
 	sc_regInit();
 	mt_clrscr();
@@ -170,12 +170,12 @@ int main(void)
 			    ap();
 			    adress = 0;
 			    id_infoPrint(adress);
-			    sc_regGet(IGNORE_TIMER, &value);
+			    sc_regGet(ErrorTimer, &value);
 			    sc_memoryPrint(adress);
 			    sc_regPrint();
 			    mt_gotoXY(26, 1);
 			    move = true;
-				sc_regSet(IGNORE_TIMER, 0);
+				sc_regSet(ErrorTimer, 0);
 				signal(SIGUSR1, stopHandler);
 				raise(SIGUSR1);
 				sc_regPrint();
@@ -198,7 +198,7 @@ int main(void)
 			case key_down:
 			{
 			    if(adress <= 89 and adress > -1 and move == true)
-			        adress += 10, sc_regGet(IGNORE_TIMER, &value);
+			        adress += 10, sc_regGet(ErrorTimer, &value);
 			    id_infoPrint(adress);
 			    sc_memoryPrint(adress);
 			    sc_regPrint();
@@ -209,7 +209,7 @@ int main(void)
 			case key_right:
 			{
 			    if(adress < 99  and move == true)
-			        adress++, sc_regGet(IGNORE_TIMER, &value);
+			        adress++, sc_regGet(ErrorTimer, &value);
 			    id_infoPrint(adress);
 			    sc_memoryPrint(adress);
 			    sc_regPrint();
@@ -220,7 +220,7 @@ int main(void)
 			case key_left:
 			{
 			    if(adress > 0  and move == true)
-			        adress--, sc_regGet(IGNORE_TIMER, &value);
+			        adress--, sc_regGet(ErrorTimer, &value);
 			    id_infoPrint(adress);
 			    sc_memoryPrint(adress);
 			    sc_regPrint();
@@ -255,7 +255,7 @@ int main(void)
 			case key_run:
 			{
 			    move = false;
-				sc_regSet(IGNORE_TIMER, 0);
+				sc_regSet(ErrorTimer, 0);
 				mt_clrscr();
 				bc_boxPrint();
 				bc_framenamePrint();
@@ -272,23 +272,23 @@ int main(void)
 			case key_step:
             {
                 move = false;
-				sc_regSet(IGNORE_TIMER, 0);
+				sc_regSet(ErrorTimer, 0);
 				mt_clrscr();
 				sc_memoryPrint(adress);
 				bc_boxPrint();
 				bc_framenamePrint();
 				printBig();
                 id_infoPrint(adress);
-                sc_regSet(IGNORE_TIMER, 1);
+                sc_regSet(ErrorTimer, 1);
                 sc_regPrint();
-                sc_regSet(IGNORE_TIMER, 0);
+                sc_regSet(ErrorTimer, 0);
                 goOnce();
             }
 				break;
 			case key_f6:
 			{
 			    move = true;
-				sc_regSet(IGNORE_TIMER, 1);
+				sc_regSet(ErrorTimer, 1);
 				signal(SIGUSR1, stopHandler);
 				raise(SIGUSR1);
 				id_infoPrint(adress);
@@ -298,12 +298,12 @@ int main(void)
 				mt_gotoXY(26, 400);
 			}
 			    break;
-			case key_blue:
+			case key_f5:
 			{
                 //
 			}
 			    break;
-			case key_red:
+			case key_f4:
 			{
                 //
 			}

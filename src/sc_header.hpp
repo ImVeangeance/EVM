@@ -7,10 +7,13 @@
 #ifndef sc_header_hpp_
 #define sc_header_hpp_
 
-#define ErrorMemoryOut 0b01
-#define ErrorInvalidReg 0b10
-#define ErrorWrongCom 0b11
-#define IGNORE_TIMER 0b100
+#define ErrorMemoryOut 0b01 // M
+#define ErrorInvalid 0b10 // P
+#define ErrorWrongCom 0b11 // E
+#define ErrorTimer 0b100 // T
+#define ErrorDivisionZero 0b101 // O
+#define Error 0b110 //
+
 
 int massive[100];
 
@@ -132,7 +135,7 @@ int sc_regInit(void)
 
 int sc_regSet(int registr, int value)
 {
-	if (registr == ErrorMemoryOut || registr == ErrorWrongCom || registr == ErrorInvalidReg || registr == IGNORE_TIMER)
+	if (registr == ErrorMemoryOut || registr == ErrorWrongCom || registr == ErrorInvalid || registr == ErrorTimer)
 	{
 		if (value == 0)
 		{
@@ -152,7 +155,7 @@ int sc_regSet(int registr, int value)
 
 int sc_regGet(int registr, int *value)
 {
-	if (registr == ErrorMemoryOut || registr == ErrorWrongCom || registr == ErrorInvalidReg || registr == IGNORE_TIMER)
+	if (registr == ErrorMemoryOut || registr == ErrorWrongCom || registr == ErrorInvalid || registr == ErrorTimer)
 	{
 		if ((flag & registr) != 0)
 		{
@@ -178,7 +181,7 @@ int sc_regPrint(void)
 	std::cout << "M";
 	mt_setfgcolor(WHITE);
 	mt_gotoXY(5, 94);
-	sc_regGet(ErrorInvalidReg, &value);
+	sc_regGet(ErrorInvalid, &value);
 	if(value)
 		mt_setfgcolor(RED);
 	else
@@ -194,7 +197,7 @@ int sc_regPrint(void)
 	std::cout << "W";
 	mt_setfgcolor(WHITE);
 	mt_gotoXY(9, 94);
-	sc_regGet(IGNORE_TIMER, &value);
+	sc_regGet(ErrorTimer, &value);
 	if(value)
 		mt_setfgcolor(RED);
 	else
@@ -219,7 +222,7 @@ int sc_commandEncode(int command, int operand, int *value)
 
 	if (operand > 0x127 || operand < 0)
 	{
-		sc_regSet(ErrorInvalidReg, 1);
+		sc_regSet(ErrorInvalid, 1);
 		return 1;
 	}
 
