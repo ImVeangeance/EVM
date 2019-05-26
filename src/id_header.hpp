@@ -30,17 +30,26 @@ void runOnMemory(void);
 
 int id_infoPrint(int adress)
 {
-	int memo;
+	int memo, command, operand;
 	sc_memoryGet(adress, &memo);
-	mt_gotoXY(3, 74);	
+	mt_gotoXY(3, 76);
+	std::cout.unsetf(std::ios::dec);
+	std::cout.setf(std::ios::hex);	
 	if (accumulator < 0)
-		std::cout << std::hex << -accumulator;
+		std::cout << std::setw(3) << std::setfill('0') << (short)-memo;
 	else
-		std::cout << "+" << accumulator;
+		std::cout << "+" << std::setw(3) << std::setfill('0') << (short)memo;
+	std::cout.unsetf(std::ios::hex);
+	std::cout.setf(std::ios::dec);	
+	mt_gotoXY(9, 73);
 	std::cout.unsetf(std::ios::hex);
 	std::cout.setf(std::ios::dec);
-	mt_gotoXY(9, 74);
-	std::cout << "+" << adress << " : " << std::hex << memo;
+	if (sc_commandDecode(memo, &command, &operand))
+		std::cout << "+00 : 00";
+	else
+		std::cout << "+" << std::setw(3) << std::setfill('0') 
+		<< std::hex << command <<  " : " << std::setw(3) << 
+		std::setfill('0') << operand;
 	//sc_memoryGet(adress, &memo);
 	std::cout.unsetf(std::ios::hex);
 	std::cout.setf(std::ios::dec);

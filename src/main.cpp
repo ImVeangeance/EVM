@@ -42,6 +42,7 @@ void handlerRun(int signaly)
         printBig();
         id_infoPrint(adress);
         sc_regPrint();
+	//fflush(stdout);
     }
     else
     {
@@ -112,10 +113,12 @@ void printBig(void)
 	sc_memoryGet(adress, &value);
 	std::stringstream sstream;
     std::string str;
-    sstream << std::setw(4) << std::setfill('0') << std::hex << value  << std::dec;
+    sstream << std::setw(4) << std::setfill('0') << std::hex << (short)value  << std::dec;
 	str = sstream.str();
-	chooseBig(h, '+');
-	bc_printbigchar(h, 15, 3, BLUE, BLACK);
+	if(value >= 0)
+		chooseBig(h, '+'), bc_printbigchar(h, 15, 3, BLUE, BLACK);
+	else
+		chooseBig(h, '0'), bc_printbigchar(h, 15, 3, BLUE, BLACK);
 	chooseBig(h, str[0]);
 	bc_printbigchar(h, 15, 11, BLUE, BLACK);
 	chooseBig(h, str[1]);
@@ -244,6 +247,10 @@ int main(void)
 			{
 			    if(adress > -1 and adress < 100 and move == true)
 			        value += 5;
+			    mt_clrscr();
+			    bc_boxPrint();
+			    bc_framenamePrint();
+			    id_infoPrint(adress);
 			    sc_memorySet(adress, value);
 			    id_infoPrint(adress);
 			    sc_regPrint();
@@ -256,7 +263,11 @@ int main(void)
 			{
 
 			    if(value > 0 and (adress > -1 and adress < 100) and move == true)
-			        value -= 5;
+				value -= 5;
+			    mt_clrscr();
+			    bc_boxPrint();
+			    bc_framenamePrint();
+			    sc_regPrint();
 			    sc_memorySet(adress, value);
 			    id_infoPrint(adress);
 			    sc_memoryPrint(adress);

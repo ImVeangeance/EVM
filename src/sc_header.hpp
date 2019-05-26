@@ -1,5 +1,6 @@
 #include <iostream>
 #include <termios.h>
+#include <limits>
 #include <unistd.h>
 #include <fstream>
 #include <iomanip>
@@ -21,7 +22,9 @@
 #define ErrorInvalidValue 0b100000 // P
 
 
-int massive[100];
+short int massive[100];
+
+int x;
 
 int registr;
 
@@ -54,7 +57,7 @@ int sc_commandDecode(int value, int *command, int *operand);
 int sc_memoryInit(void)
 {
 	for(auto i = 0; i < 100; i++)
-		massive[i] = 0;
+		massive[i] = 0; //= std::numeric_limits<int>::min(-65535);
 	return 0;
 }
 
@@ -121,8 +124,14 @@ int sc_memoryPrint(int adress)
 			}
 			std::cout.unsetf(std::ios::dec);
 			std::cout.setf(std::ios::hex);
-			std::cout << "+" << std::setw(4) << std::setfill('0') 
+			x = massive[10 * i + j + 1];
+			//DO NOT WORK else !!! ZNAK MENYAETSYA NA PREDIDUWEM
+			if(x >= 0)			
+				std::cout << "+" << std::setw(4) << std::setfill('0') 
 				  << massive[10 * i + j] << " ";
+			//else
+			//	std::cout << "-" << std::setw(4) << std::setfill('0') 
+			//	  << massive[10 * i + j] << " ";
 			std::cout.unsetf(std::ios::hex);
 			std::cout.setf(std::ios::dec);
 			mt_setbgcolor(BLACK);
