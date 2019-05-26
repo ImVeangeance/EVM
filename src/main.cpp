@@ -29,11 +29,7 @@ void handlerRun(int signaly)
 	    sc_memoryPrint(adress);
         printBig();
         id_infoPrint(adress);
-<<<<<<< HEAD
         sc_regPrint();
-=======
-        sc_regPrint(12, 77);
->>>>>>> cb763528832d1b587757a915e1bff95d432dbf0f
     }
     else
     {

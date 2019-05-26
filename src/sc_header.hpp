@@ -8,11 +8,11 @@
 #define sc_header_hpp_
 
 #define ErrorMemoryOut 0b01 // M
-#define ErrorInvalid 0b10 // P
+#define ErrorInvalidReg 0b10 // R
 #define ErrorWrongCom 0b11 // E
 #define ErrorTimer 0b100 // T
 #define ErrorDivisionZero 0b101 // O
-#define Error 0b110 //
+#define ErrorInvalidValue 0b110 // P
 
 
 int massive[100];
@@ -135,7 +135,8 @@ int sc_regInit(void)
 
 int sc_regSet(int registr, int value)
 {
-	if (registr == ErrorMemoryOut || registr == ErrorWrongCom || registr == ErrorInvalid || registr == ErrorTimer)
+	if (registr == ErrorMemoryOut || registr == ErrorWrongCom || registr == ErrorInvalidReg || registr == ErrorTimer || registr == ErrorDivisionZero
+	|| registr == ErrorInvalidValue)
 	{
 		if (value == 0)
 		{
@@ -155,7 +156,8 @@ int sc_regSet(int registr, int value)
 
 int sc_regGet(int registr, int *value)
 {
-	if (registr == ErrorMemoryOut || registr == ErrorWrongCom || registr == ErrorInvalid || registr == ErrorTimer)
+	if (registr == ErrorMemoryOut || registr == ErrorWrongCom || registr == ErrorInvalidReg || registr == ErrorTimer || registr == ErrorDivisionZero
+	|| registr == ErrorInvalidValue)
 	{
 		if ((flag & registr) != 0)
 		{
@@ -181,12 +183,12 @@ int sc_regPrint(void)
 	std::cout << "M";
 	mt_setfgcolor(WHITE);
 	mt_gotoXY(5, 94);
-	sc_regGet(ErrorInvalid, &value);
+	sc_regGet(ErrorInvalidReg, &value);
 	if(value)
 		mt_setfgcolor(RED);
 	else
 		mt_setfgcolor(GREEN);
-	std::cout << "I";
+	std::cout << "R";
 	mt_setfgcolor(WHITE);
 	mt_gotoXY(7, 94);
 	sc_regGet(ErrorWrongCom, &value);
@@ -203,8 +205,15 @@ int sc_regPrint(void)
 		mt_setfgcolor(GREEN);
 	std::cout << "0";
 	mt_setfgcolor(WHITE);
-	mt_setfgcolor(WHITE);
 	mt_gotoXY(11, 94);
+	sc_regGet(ErrorInvalidReg, &value);
+	if(value)
+		mt_setfgcolor(RED);
+	else
+		mt_setfgcolor(GREEN);
+	std::cout << "V";
+	mt_setfgcolor(WHITE);
+	mt_gotoXY(13, 94);
 	sc_regGet(ErrorTimer, &value);
 	if(value)
 		mt_setfgcolor(RED);
@@ -231,7 +240,7 @@ int sc_commandEncode(int command, int operand, int *value)
 
 	if (operand > 0x127 || operand < 0)
 	{
-		sc_regSet(ErrorInvalid, 1);
+		sc_regSet(ErrorInvalidReg, 1);
 		return 1;
 	}
 

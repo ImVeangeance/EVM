@@ -267,14 +267,14 @@ int ALU(int command, int operand)
 	{
 		case ADD:
 			if (accumulator + value > 0xFFFF){
-				sc_regSet(ErrorInvalid, 1);
+				sc_regSet(ErrorInvalidValue, 1);
 				break;
 			}
 			accumulator += value;
 			break;
 		case SUB:
 			if (accumulator - value < -0xFFFE) {
-				sc_regSet(ErrorInvalid, 1);
+				sc_regSet(ErrorInvalidValue, 1);
 				break;
 			}
 			accumulator -= value;
@@ -288,7 +288,7 @@ int ALU(int command, int operand)
 			break;
 		case MUL:
 			if (accumulator * value > 0xFFFF) {
-				sc_regSet(ErrorInvalid, 1);
+				sc_regSet(ErrorInvalidValue, 1);
 				break;
 			}
 			accumulator *= value;
