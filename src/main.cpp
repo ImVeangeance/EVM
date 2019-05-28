@@ -9,7 +9,7 @@
 #include <termios.h>
 #include <signal.h>
 #include <sys/ioctl.h>
-#include <sys/time.h>
+#include <sys/time.h> // ETA BIBLIOTEKA
 #include <fcntl.h>
 #include <sys/stat.h>
 #include "mt_header.hpp"
@@ -18,10 +18,10 @@
 #include "rk_header.hpp"
 #include "id_header.hpp"
 
-struct itimerval newTime, oldTime;
+struct itimerval newTime, oldTime; // PEREMENIE DLYA STRUCKTURI
 
 int adress = 0, value = 0;
-
+////////////////////////////////////////////////////////////////////////////////////////
 void stopHandler(int signaly)
 {
     newTime.it_interval.tv_sec = 0;
@@ -35,16 +35,15 @@ void handlerRun(int signaly)
 {
     int value;
     sc_regGet(ErrorTimer, &value);
-    if((value == 0) & (adress + 1 < 100))
+    if((value == 0) & (adress + 1 < 100)) // otrisovka govna
     {
         adress++;	
 	sc_memoryPrint(adress);
         printBig();
         id_infoPrint(adress);
         sc_regPrint();
-	//fflush(stdout);
     }
-    else
+    else // USLOVIE KOGDA PROWEL CHEREZ VSE ELEMENTI
     {
         signal(SIGALRM, handlerRun);
         newTime.it_interval.tv_sec = 0;
@@ -63,7 +62,7 @@ void handlerOnce(int signaly)
 {
     int value;
     sc_regGet(ErrorTimer, &value);
-    if((value == 0) & (adress + 1 < 100))
+    if((value == 0) & (adress + 1 < 100)) // toje OTRISOVKA
     {
         mt_clrscr();
         adress++;
@@ -87,8 +86,8 @@ void handlerOnce(int signaly)
 
 void goOnce()
 {
-    signal(SIGALRM, handlerOnce);
-    newTime.it_interval.tv_sec = 0;
+    signal(SIGALRM, handlerOnce); // VSE ETI PEREMENNIE ETO PROSTO SECUNDI I MILISECUNDI
+    newTime.it_interval.tv_sec = 0;// ESLI NE SOVPADAET S STROKOI NIJE NA ODNU, TO IDET 1 RAZ
     newTime.it_interval.tv_usec = 0;
     newTime.it_value.tv_sec = 1;
     newTime.it_value.tv_usec = 0;
@@ -97,7 +96,7 @@ void goOnce()
 
 void runOnMemory()
 {
-    signal(SIGALRM, handlerRun);
+    signal(SIGALRM, handlerRun); // SIGNAL PRINIMAET SIGNAL, VTORAYA PEREMENNAYA GOVORIT 4TO DELAT' TO NADO UU SUKA
     newTime.it_interval.tv_sec = 1;
     newTime.it_interval.tv_usec = 0;
     id_infoPrint(adress);
@@ -106,7 +105,7 @@ void runOnMemory()
     setitimer(ITIMER_REAL, &newTime, &oldTime);
 
 }
-
+////////////////////////////////////////////////////////////////////////////////////////////////
 void printBig(void)
 {
     int h[2] = {0};
@@ -276,7 +275,7 @@ int main(void)
 			    mt_gotoXY(26, 400);
 			}
 			    break;
-			case key_run:
+			case key_run: // EDET 4EREZ VES' MASSIV
 			{
 			    move = false;
 				sc_regSet(ErrorTimer, 0);
@@ -293,7 +292,7 @@ int main(void)
 			    mt_gotoXY(26, 400);
 			}
 				break;
-			case key_step:
+			case key_step: // EDET 1 RAZ
             		{
                 		move = false;
 				sc_regSet(ErrorTimer, 0);
@@ -325,7 +324,7 @@ int main(void)
 	           		fflush(stdout);
 			}
 			    break;
-			case key_f6:
+			case key_f6: // 2 I 3 FUNCCII OSTANAVLIVAUT PROGU
 			{
 			    	move = false;
 				signal(SIGUSR1, stopHandler);
