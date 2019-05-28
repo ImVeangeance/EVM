@@ -72,9 +72,9 @@ int id_infoPrint(int adress)
 	mt_gotoXY(22,45);
 	std::cout << "'g' - run";
 	std::cout << "\t't' - step";
-	mt_gotoXY(12,70);
-	mt_setfgcolor(GREEN);
-	std::cout << "PlsDeleteMyLife";
+	//mt_gotoXY(12,70);
+	//mt_setfgcolor(GREEN);
+	//std::cout << "PlsDeleteMyLife";
 	mt_setfgcolor(WHITE);
 	mt_gotoXY(26, 400);
 	return 0;

@@ -247,9 +247,10 @@ int main(void)
 			{
 			    if(adress > -1 and adress < 100 and move == true)
 			        value += 5;
-			    mt_clrscr();
-			    bc_boxPrint();
-			    bc_framenamePrint();
+			    //if dlya 'V'
+			    //mt_clrscr();
+			    //bc_boxPrint();
+			    //bc_framenamePrint();
 			    id_infoPrint(adress);
 			    sc_memorySet(adress, value);
 			    id_infoPrint(adress);
@@ -264,9 +265,9 @@ int main(void)
 
 			    if(value > 0 and (adress > -1 and adress < 100) and move == true)
 				value -= 5;
-			    mt_clrscr();
-			    bc_boxPrint();
-			    bc_framenamePrint();
+			    //mt_clrscr();
+			    //bc_boxPrint();
+			    //bc_framenamePrint();
 			    sc_regPrint();
 			    sc_memorySet(adress, value);
 			    id_infoPrint(adress);

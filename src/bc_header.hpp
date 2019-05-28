@@ -25,8 +25,8 @@ int bc_bigcharread (int fd, int *big, int need_count, int *count);
 void bc_framenamePrint(void)
 {
 	mt_setfgcolor(BLUE);
-	mt_gotoXY(11,66);
-	std::cout << " Author ";
+	//mt_gotoXY(11,66);
+	//std::cout << " Author ";
 	mt_gotoXY(2,3);
 	std::cout << " Memory ";
 	mt_gotoXY(2,66);
@@ -107,7 +107,7 @@ void bc_boxPrint(void)
 	bc_box(8,66,24,2); // Operand
 	bc_box(2,93,3,12); // Flag
 	bc_box(14,3,40,9); // Big char
-	bc_box(11,66,24,2);
+	//bc_box(11,66,24,2);
 	bc_box(14,45,39,9); // Action
 	//bc_box(14,87,9,9);
 }
