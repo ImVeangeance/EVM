@@ -14,15 +14,15 @@
 #ifndef sc_header_hpp_
 #define sc_header_hpp_
 
-#define ErrorMemoryOut 0b01 // M
-#define ErrorInvalidReg 0b10 // R
-#define ErrorWrongCom 0b100 // E
-#define ErrorTimer 0b1000 // T
-#define ErrorDivisionZero 0b10000 // O
-#define ErrorInvalidValue 0b100000 // P
+#define ErrorMemoryOut 0b01 // M // VIWEL ZA GRANICI MASSIVA [0;99]
+#define ErrorInvalidReg 0b10 // R // REGISRT NEPRAVIL"NII
+#define ErrorWrongCom 0b100 // E // NEPRAVIL'NAYA COMANDA
+#define ErrorTimer 0b1000 // T // OSTANOVKA PROGRAMMI
+#define ErrorDivisionZero 0b10000 // O // DELENIE NA 0
+#define ErrorInvalidValue 0b100000 // P // Nepravil'noe zna4enie elementa > 32bit ili < 0
 
 
-short int massive[100];
+short int massive[100]; // PAMYAT'
 
 int x;
 
@@ -54,14 +54,14 @@ int sc_commandEncode (int command, int operand, int *value);
 
 int sc_commandDecode(int value, int *command, int *operand);
 
-int sc_memoryInit(void)
+int sc_memoryInit(void) // obnulenie massiva
 {
 	for(auto i = 0; i < 100; i++)
 		massive[i] = 0; //= std::numeric_limits<int>::min(-65535);
 	return 0;
 }
 
-int sc_memorySet(int adress, int value)
+int sc_memorySet(int adress, int value) // sohranyaet zna4enie VALUE v tekuwii element ADRESS
 {
 	if(adress > 99 || adress < 0)
 	{
@@ -74,7 +74,7 @@ int sc_memorySet(int adress, int value)
 	return value;
 }
 
-int sc_memoryGet(int adress, int *value)
+int sc_memoryGet(int adress, int *value) // polu4aet zna4enie ADRESS
 {
 	if(adress > 99 || adress < 0)
 	{
@@ -88,7 +88,7 @@ int sc_memoryGet(int adress, int *value)
 	return *value;
 }
 
-int sc_memorySave(std::string filename)
+int sc_memorySave(std::string filename) // sohranenie massiva v file
 {
 	std::ofstream file_open(filename, std::ios::binary);
 	if(file_open.is_open())
@@ -102,7 +102,7 @@ int sc_memorySave(std::string filename)
 	return 0;
 }
 
-int sc_memoryLoad(std::string filename)
+int sc_memoryLoad(std::string filename) // zagruzka massive iz faila
 {
 	std::ifstream file_open(filename, std::ios::binary);
 	file_open.read((char*)massive, sizeof(massive));
@@ -110,7 +110,7 @@ int sc_memoryLoad(std::string filename)
     	return 0;
 }
 
-int sc_memoryPrint(int adress)
+int sc_memoryPrint(int adress) // vivod massiva pamyati
 {
 	for(auto i = 0; i < 10; i++)
 	{
@@ -142,13 +142,13 @@ int sc_memoryPrint(int adress)
 	return 0;
 }
 
-int sc_regInit(void)
+int sc_regInit(void) // obyavlyaet flag
 {
 	flag = 0;
 	return 0;
 }
 
-int sc_regSet(int registr, int value)
+int sc_regSet(int registr, int value) // sohranyaet owibku
 {
 	if (registr == ErrorMemoryOut || registr == ErrorWrongCom || registr == ErrorInvalidReg || registr == ErrorTimer || registr == ErrorDivisionZero
 	|| registr == ErrorInvalidValue)
@@ -169,12 +169,12 @@ int sc_regSet(int registr, int value)
 	return 0;
 }
 
-int sc_regGet(int registr, int *value)
+int sc_regGet(int registr, int *value) // polu4aet svedeniya, est' li owibka
 {
 	if (registr == ErrorMemoryOut || registr == ErrorWrongCom || registr == ErrorInvalidReg || registr == ErrorTimer || registr == ErrorDivisionZero
 	|| registr == ErrorInvalidValue)
 	{
-		if ((flag & registr) != 0)
+		if ((flag & registr) != 0) // ternarnii operacii
 		{
 			*value = 1;
 		}
@@ -186,7 +186,7 @@ int sc_regGet(int registr, int *value)
 	return 0;
 }
 
-int sc_regPrint(void)
+int sc_regPrint(void) // vivod registrov
 {
 	int value;
 	mt_gotoXY(3, 94);
@@ -241,7 +241,7 @@ int sc_regPrint(void)
 	mt_gotoXY(26, 400);
 }
 
-int sc_commandEncode(int command, int operand, int *value)
+int sc_commandEncode(int command, int operand, int *value) // codirovka comandi
 {
 	if (command < 0x10
 		|| (command > 0x11 && command < 0x20)
@@ -266,7 +266,7 @@ int sc_commandEncode(int command, int operand, int *value)
 }
 
 
-int sc_commandDecode(int value, int *command, int *operand)
+int sc_commandDecode(int value, int *command, int *operand) // decodirovka
 {
 	if ((value >> 14) != 0)
 	{

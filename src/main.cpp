@@ -96,7 +96,7 @@ void goOnce()
 
 void runOnMemory()
 {
-    signal(SIGALRM, handlerRun); // SIGNAL PRINIMAET SIGNAL, VTORAYA PEREMENNAYA GOVORIT 4TO DELAT' TO NADO UU SUKA
+    signal(SIGALRM, handlerRun); // SIGNAL PRINIMAET SIGNAL, VTORAYA PEREMENNAYA GOVORIT 4TO DELAT'
     newTime.it_interval.tv_sec = 1;
     newTime.it_interval.tv_usec = 0;
     id_infoPrint(adress);

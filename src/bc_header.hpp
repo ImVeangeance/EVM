@@ -22,7 +22,7 @@ int bc_getbigcharpos(int *big, int x, int y, int *value);
 int bc_bigcharwrite (int fd, int *big,int count);
 int bc_bigcharread (int fd, int *big, int need_count, int *count);
 
-void bc_framenamePrint(void)
+void bc_framenamePrint(void) // Imena Ramok
 {
 	mt_setfgcolor(BLUE);
 	//mt_gotoXY(11,66);
@@ -54,14 +54,14 @@ void bc_framenamePrint(void)
 	mt_setfgcolor(BLACK);
 }
 
-int bc_printA (std::string str)
+int bc_printA (std::string str) // Perehod v escape posledovatel'nost'
 {
 	std::cout << "\E(0";
 	std::cout << str;
 	std::cout << "\E(B";
 }
 
-int bc_box(int x1, int y1, int x2, int y2)
+int bc_box(int x1, int y1, int x2, int y2) // Risovlaka ramok
 {
 	//mt_setbgcolor(PINK);
 	mt_setfgcolor(BLUE);
@@ -72,12 +72,12 @@ int bc_box(int x1, int y1, int x2, int y2)
 			bc_printA("l");
 		if(i == y2)
 			bc_printA("m");
-		bc_printA("x");
+		bc_printA("x");// Perehod v escape posledovatel'nost'
 	}
 	for(auto i = 1; i <= y2; i++) /* Right */
 	{
 		mt_gotoXY(x1 + i, y1 + x2);
-		bc_printA("x");
+		bc_printA("x");// Perehod v escape posledovatel'nost'
 	}
 	mt_gotoXY(x1, y1);
 	for(auto i = 0; i <= x2; i++) /* Top */
@@ -87,7 +87,7 @@ int bc_box(int x1, int y1, int x2, int y2)
 		else
 			bc_printA("r");
 	}
-	mt_gotoXY(x1 + y2 , y1);
+	mt_gotoXY(x1 + y2 , y1);// Perehod v opredelennii piksel' v terminale
 	for(auto i = 0; i <= x2; i++) /* Bottom */
 	{
 	//	std::cout << "\E(0``aaffggiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~";
@@ -99,7 +99,7 @@ int bc_box(int x1, int y1, int x2, int y2)
 	mt_setfgcolor(WHITE);
 }
 
-void bc_boxPrint(void)
+void bc_boxPrint(void) // Risovalka vseh ramok
 {
 	bc_box(2,3,60,11); // Memory
 	bc_box(2,66,24,2); // Accumulator
@@ -112,15 +112,15 @@ void bc_boxPrint(void)
 	//bc_box(14,87,9,9);
 }
 
-int bc_printbigchar(int a[2], int x, int y, enum colors color1, enum colors color2)
+int bc_printbigchar(int a[2], int x, int y, enum colors color1, enum colors color2) // bol'woe 4islo
 {
 	if (x < 0 || y < 0)
 		return -1;
 
 	char str[8] = { 0 };
 
-	mt_setfgcolor(color1);
-	mt_setbgcolor(color2);
+	mt_setfgcolor(color1); // cvet texta
+	mt_setbgcolor(color2); // cvet fona texta
 	for (int i = 0; i < 2; i++)
 	{
 		int a_buf = a[i];
@@ -196,8 +196,10 @@ int bc_bigcharread (int fd, int *big, int need_count, int *count)
 	return 0;
 }
 
-void chooseBig(int *BIG, int value) {
-	switch (value) {
+void chooseBig(int *BIG, int value) // NEVAJNO
+{
+	switch (value)
+	{
 	case '+':
 		BIG[0] = 1008205824;
             	BIG[1] = 6204;

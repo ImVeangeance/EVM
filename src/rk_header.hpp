@@ -15,7 +15,7 @@
 
 struct termios stored_settings;
 
-enum keys {
+enum keys { // strucktura s klu4ami dlya deistvii
 	key_num = 0,
 	key_up = 10,
 	key_down,
@@ -42,7 +42,7 @@ int rk_mytermsave (void);
 int rk_mytermrestore (void);
 int rk_mytermregime (int regime, int vtime, int vmin, int echo, int sigint);
 
-int rk_readkey(enum keys *key)
+int rk_readkey(enum keys *key) // perevod knopki v klu4
 {
 
 	rk_mytermregime(1, 0, 1, 1, 1);
@@ -84,7 +84,7 @@ int rk_readkey(enum keys *key)
 	return 0;
 }
 
-int rk_mytermsave(void)
+int rk_mytermsave(void) // sohranenie sostoyaniya kanoni4eskogo rejima
 {
 	if (tcgetattr(0, &stored_settings)) {
 		return 1;
@@ -93,7 +93,7 @@ int rk_mytermsave(void)
 	return 0;
 }
 
-int rk_mytermrestore(void)
+int rk_mytermrestore(void) // vosstanovlenie kanon rejima
 {
 	if (tcsetattr(0, TCSANOW, &stored_settings)){
 		return 1;
@@ -102,7 +102,7 @@ int rk_mytermrestore(void)
 	return 0;
 }
 
-int rk_mytermregime(int regime, int vtime, int vmin, int echo, int sigint)
+int rk_mytermregime(int regime, int vtime, int vmin, int echo, int sigint) // perehod v nekanon rejim
 {
 	struct termios new_settings;
 	rk_mytermsave();
