@@ -1,0 +1,3 @@
+/home/death/git/EVM/lab4/build/CMakeFiles/rebuild_cache.dir
+/home/death/git/EVM/lab4/build/CMakeFiles/main.dir
+/home/death/git/EVM/lab4/build/CMakeFiles/edit_cache.dir
